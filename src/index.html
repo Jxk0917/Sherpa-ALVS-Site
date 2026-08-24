@@ -1,0 +1,518 @@
+---
+layout: layouts/base.njk
+title: Sherpa, hemp measured to the milligram
+description: Precision-dosed hemp. Pick a dose and Sherpa shows you how fast it lands, how long it stays, and which format to take it in.
+---
+
+<main id="main">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO — the line and the product on one crimson field. The cans
+     are drawn (#can-art), not photographed.
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-topo" aria-hidden="true"><svg viewBox="0 0 1200 900"><use href="#c-ridge"/></svg></div>
+  <div class="shell hero-grid">
+
+    <div>
+      <h1 class="t-display enter">Skip the alcohol.<br>Keep the buzz.</h1>
+      <div class="hero-actions enter" data-d="1">
+        <a class="btn btn-light" href="#collections">Shop seltzers</a>
+        <a class="btn btn-on-dark" href="#collections">Shop all</a>
+      </div>
+    </div>
+
+    <div class="cans" role="img"
+         aria-label="Sherpa THC seltzer, 10 mg a can, in Blood Orange, Classic Lemonade and Watermelon">
+      <div class="can-floor enter" data-d="3"></div>
+      <div class="can-slot can-l">
+        <svg class="can enter" data-d="1" viewBox="0 0 320 900" style="color:#C0402A">
+          <use href="#can-art"/><text class="can-flavor" x="160" y="752">BLOOD ORANGE</text>
+        </svg>
+      </div>
+      <div class="can-slot can-r">
+        <svg class="can enter" data-d="2" viewBox="0 0 320 900" style="color:#2E4A34">
+          <use href="#can-art"/><text class="can-flavor" x="160" y="752">WATERMELON</text>
+        </svg>
+      </div>
+      <div class="can-slot can-c">
+        <svg class="can enter" viewBox="0 0 320 900" style="color:#DE9F33">
+          <use href="#can-art"/><text class="can-flavor" x="160" y="752">CLASSIC LEMONADE</text>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     THE DOSE INSTRUMENT — the page's signature. Precision dosing is
+     the product, so you operate it rather than read about it.
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="band" id="dose">
+  <div class="shell dose-grid">
+
+    <div class="section-head dose-head reveal">
+      <div class="dose-head-photo" aria-hidden="true"></div>
+      <div class="dose-head-inner">
+        <p class="t-label tag tag-smoke">Dosing<span class="tag-fact">5 to 100&nbsp;mg</span></p>
+        <h2 class="t-display t-lg">Know your<br>altitude.</h2>
+        <p class="t-body">
+          Pick a dose. We'll show you how fast it lands, how long it stays, and what to take it in.
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal" data-d="1">
+      <div class="instrument">
+        <div class="inst-head">
+          <p class="t-label">Select a dose</p>
+          <p class="t-label">&#916;9-THC per serving</p>
+        </div>
+
+        <div class="inst-scale">
+          <div class="rail-wrap">
+            <div class="stops" role="radiogroup" aria-label="Dose in milligrams" id="stops">
+              <button class="stop" type="button" role="radio" aria-checked="true" tabindex="0" data-i="0">
+                <span class="stop-val">5</span><span class="stop-name">Microdose</span><span class="stop-tick"></span>
+              </button>
+              <button class="stop" type="button" role="radio" aria-checked="false" tabindex="-1" data-i="1">
+                <span class="stop-val">10</span><span class="stop-name">Standard</span><span class="stop-tick"></span>
+              </button>
+              <button class="stop" type="button" role="radio" aria-checked="false" tabindex="-1" data-i="2">
+                <span class="stop-val">25</span><span class="stop-name">Elevated</span><span class="stop-tick"></span>
+              </button>
+              <button class="stop" type="button" role="radio" aria-checked="false" tabindex="-1" data-i="3">
+                <span class="stop-val">50</span><span class="stop-name">Expedition</span><span class="stop-tick"></span>
+              </button>
+              <button class="stop" type="button" role="radio" aria-checked="false" tabindex="-1" data-i="4">
+                <span class="stop-val">100</span><span class="stop-name">Summit</span><span class="stop-tick"></span>
+              </button>
+            </div>
+            <div class="graduations" aria-hidden="true"></div>
+            <div class="baseline" aria-hidden="true"></div>
+            <div class="needle" id="needle" style="--i:0" aria-hidden="true"><span class="needle-dot"></span></div>
+          </div>
+        </div>
+
+        <div class="inst-readout" id="readout" aria-live="polite">
+          <div>
+            <p class="t-label readout-label">Onset</p>
+            <p class="t-value readout-val swap"><span id="r-onset">15</span><span class="t-unit">min</span></p>
+          </div>
+          <div>
+            <p class="t-label readout-label">Duration</p>
+            <p class="t-value readout-val swap"><span id="r-dur">2</span><span class="t-unit">hrs</span></p>
+          </div>
+          <div>
+            <p class="t-label readout-label">What it feels like</p>
+            <p class="t-sub readout-feel swap" id="r-feel">Barely there. Your focus stays exactly where you left it.</p>
+          </div>
+        </div>
+
+        <div class="inst-foot">
+          <div class="inst-format">
+            <p class="t-label">Take it as</p>
+            <p class="t-sub swap" id="r-format">THC Seltzer &middot; 5 mg per can</p>
+          </div>
+          <a class="btn btn-primary" href="#collections">
+            Shop this dose <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+      <p class="inst-note">Onset and duration are batch-tested averages. Start at the lowest stop if it's your first time.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ GUARANTEE STRIP ═══ -->
+<section class="guarantees band-sm">
+  <div class="shell guarantee-grid">
+    <div class="guarantee reveal"><svg width="19" height="19" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-flask"/></svg><span>Lab tested, results published</span></div>
+    <div class="guarantee reveal" data-d="1"><svg width="19" height="19" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-leaf"/></svg><span>Hemp-derived, Farm Bill compliant</span></div>
+    <div class="guarantee reveal" data-d="2"><svg width="19" height="19" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-mountain"/></svg><span>Crafted in San Antonio, TX</span></div>
+    <div class="guarantee reveal" data-d="3"><svg width="19" height="19" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-truck"/></svg><span>Ships within 24 hours</span></div>
+  </div>
+</section>
+
+<!-- ═══ COLLECTIONS — bento, six items, six cells ═══ -->
+<section class="band" id="collections">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="t-label tag">The range<span class="tag-fact">Six families</span></p>
+      <h2 class="t-display t-lg">Every format.<br>One standard.</h2>
+      <p class="t-body">Every family is dosed, tested and labelled the same way, so moving between them never means starting over.</p>
+    </div>
+
+    <div class="bento">
+      <a class="tile tile-shop tile-crimson b-gummies reveal" href="#collections">
+        <div class="tile-photo">
+          <img src="/assets/product-gummies.png" width="214" height="288" loading="lazy"
+               alt="Sherpa Social Gummies pouch, Strawberry Bellini flavour">
+        </div>
+        <div class="tile-body">
+          <div class="tile-body-head">
+            <svg class="tile-icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-leaf"/></svg>
+            <p class="t-label tile-meta">10, 25 or 100 mg per piece</p>
+          </div>
+          <h3>THC Gummies</h3>
+          <p>Sherpa Social Gummies. Real fruit pur&eacute;e, no cannabis aftertaste.</p>
+        </div>
+      </a>
+
+      <a class="tile tile-shop tile-paper b-drinks reveal" data-d="1" href="#collections">
+        <div class="tile-photo">
+          <img src="/assets/product-drinks.png" width="462" height="295" loading="lazy"
+               alt="Sherpa THC Seltzer cans, four flavours in a row">
+        </div>
+        <div class="tile-body">
+          <div class="tile-body-head">
+            <svg class="tile-icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cup"/></svg>
+            <p class="t-label tile-meta">5 to 100 mg THC</p>
+          </div>
+          <h3>THC Drinks</h3>
+          <p>Nano-emulsified seltzers, plus Spirits: a 750 ml non-alcoholic bottle at 5 or 10 mg.</p>
+        </div>
+      </a>
+
+      <a class="tile tile-shop tile-paper b-baked reveal" href="#collections">
+        <div class="tile-photo">
+          <img src="/assets/product-krispies.png" width="248" height="317" loading="lazy"
+               alt="Sherpa Baked Krispies pouch, Fruity Rainbow flavour">
+        </div>
+        <div class="tile-body">
+          <div class="tile-body-head">
+            <svg class="tile-icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-pack"/></svg>
+            <p class="t-label tile-meta">15 to 25 mg THC</p>
+          </div>
+          <h3>Baked Goods</h3>
+          <p>Taffy, Caramel Bites and Krispies, each dosed and labelled on its own.</p>
+        </div>
+      </a>
+
+      <a class="tile tile-shop tile-dark b-wellness reveal" data-d="1" href="#collections">
+        <div class="tile-photo">
+          <img src="/assets/product-wellness.png" width="269" height="363" loading="lazy"
+               alt="Sherpa 10:1 Relief Roll-On, mint scented, with box">
+        </div>
+        <div class="tile-body">
+          <div class="tile-body-head">
+            <svg class="tile-icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
+            <p class="t-label tile-meta">200 mg THC &middot; 2000 mg CBD</p>
+          </div>
+          <h3>Wellness</h3>
+          <p>Mint-scented relief roll-on, formulated 10:1 CBD to THC for recovery.</p>
+        </div>
+      </a>
+
+      <a class="tile tile-shop tile-paper b-pet reveal" href="#collections">
+        <div class="tile-photo">
+          <img src="/assets/product-pet.png" width="260" height="328" loading="lazy"
+               alt="Sherpa Dawg Snax pouch, Bacon Buffet flavour">
+        </div>
+        <div class="tile-body">
+          <div class="tile-body-head">
+            <svg class="tile-icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-paw"/></svg>
+            <p class="t-label tile-meta">25 mg CBD &middot; THC-free</p>
+          </div>
+          <h3>CBD Pet Treats</h3>
+          <p>Dawg Snax, vet-formulated chews sized by weight. Bacon Buffet and more flavours.</p>
+        </div>
+      </a>
+
+      <a class="tile tile-shop tile-crimson b-stix reveal" data-d="1" href="#collections">
+        <div class="tile-photo">
+          <img src="/assets/product-stix.png" width="455" height="317" loading="lazy"
+               alt="Sherpa Quick Stix drink mix pouches, 10 mg and 25 mg, Pure Unflavored">
+        </div>
+        <div class="tile-body">
+          <div class="tile-body-head">
+            <svg class="tile-icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-bolt"/></svg>
+            <p class="t-label tile-meta">10 to 25 mg THC</p>
+          </div>
+          <h3>Quick Stix</h3>
+          <p>Fast-acting THC drink mix, six sticks a pack in Pure Unflavored.</p>
+        </div>
+      </a>
+
+      <a class="tile tile-shop tile-deep b-bundles reveal" data-d="1" href="#collections">
+        <div class="tile-photo">
+          <img src="/assets/product-bundle.png" width="1400" height="580" loading="lazy"
+               alt="A Sherpa bundle: gummies, seltzers, Quick Stix, krispies, roll-on and pet treats together">
+        </div>
+        <div class="tile-body">
+          <div class="tile-body-head">
+            <svg class="tile-icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-mountain"/></svg>
+            <p class="t-label tile-meta">Save up to 25%</p>
+          </div>
+          <h3>Bundles</h3>
+          <p>Build a kit across formats and pay one price for the whole climb.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BRAND BAND — the one full-bleed moment ═══ -->
+<section class="brandband band">
+  <div class="topo" aria-hidden="true" style="color:var(--ivory);--to:.13;--tw:118%;--tl:-9%;--tt:-38%">
+    <svg viewBox="0 0 1200 900"><use href="#c-pass"/></svg>
+  </div>
+  <div class="shell brandband-inner">
+    <img class="reveal" src="/assets/logo-white.png" alt="Sherpa" width="318" height="140">
+    <h2 class="t-display t-lg reveal" data-d="1">Nobody summits alone.</h2>
+    <p class="reveal" data-d="2">Every order ships with a dosing card and a real number to call.</p>
+  </div>
+</section>
+
+<!-- ═══ PROOF — certificate as the artifact ═══ -->
+<section class="proof band-lg" id="standard">
+  <div class="shell">
+    <div class="proof-grid">
+      <div>
+        <p class="t-label tag tag-lit reveal">Lab results<span class="tag-fact">Every batch</span></p>
+        <h2 class="t-display t-lg reveal" data-d="1">We publish<br>the receipts.</h2>
+        <p class="t-body reveal" data-d="2" style="margin-top:1.35rem">
+          Every batch goes to an ISO-accredited lab before it ships. You read the same
+          certificate we do. It's printed on the box as a QR code and posted here.
+        </p>
+
+        <div class="feature reveal" data-d="2">
+          <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
+          <div>
+            <h3>Dosing you can navigate</h3>
+            <p>Onset and duration printed in plain language on every package.</p>
+          </div>
+        </div>
+        <div class="feature reveal" data-d="3">
+          <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-pack"/></svg>
+          <div>
+            <h3>Packed for the trail</h3>
+            <p>Child-resistant, odour-sealed, plastic-free outer.</p>
+          </div>
+        </div>
+
+        <a class="btn btn-on-dark" href="#standard" style="margin-top:2.25rem">
+          See the certificate <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+
+      <div class="coa reveal" data-d="1">
+        <div class="coa-head">
+          <p class="t-label">Certificate of analysis</p>
+          <p class="t-label">14 Jul 2026</p>
+        </div>
+        <p class="coa-batch">Batch 24-A &middot; Basecamp Seltzer</p>
+        <dl class="coa-rows">
+          <div class="coa-row"><dt>&#916;9-THC</dt><dd>10.06 mg / can</dd></div>
+          <div class="coa-row"><dt>Label claim</dt><dd>10.00 mg</dd></div>
+          <div class="coa-row"><dt>CBD</dt><dd>&lt; 0.10 mg</dd></div>
+        </dl>
+        <div class="coa-safety">
+          <span class="t-label">Screened and cleared</span>
+          <div class="chips">
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Pesticides</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Heavy metals</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Solvents</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Microbials</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brand claims, not measured telemetry. -->
+    <div class="stats">
+      <div class="stat reveal">
+        <p class="t-value">&plusmn;5<span class="t-unit">%</span></p>
+        <p class="t-label">Dose accuracy</p>
+      </div>
+      <div class="stat reveal" data-d="1">
+        <p class="t-value">15<span class="t-unit">min</span></p>
+        <p class="t-label">Fastest onset</p>
+      </div>
+      <div class="stat reveal" data-d="2">
+        <p class="t-value">340<span class="t-unit">k</span></p>
+        <p class="t-label">Orders guided</p>
+      </div>
+      <div class="stat reveal" data-d="3">
+        <p class="t-value">4.9</p>
+        <p class="t-label">Average rating</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SPOTLIGHT — specs as tiles, dose as a plinth ═══ -->
+<section class="band-lg spotlight">
+  <div class="spot-scene" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="spot-grid">
+      <div>
+        <p class="t-label tag tag-smoke reveal">Flagship<span class="tag-fact">Three flavours</span></p>
+        <h2 class="t-display t-lg reveal">Basecamp<br>Seltzer.</h2>
+        <p class="t-body reveal" data-d="1" style="margin-top:1.35rem">
+          Nano-emulsified for a faster, more predictable onset: about 15 minutes,
+          not the 45 to 90 you'd wait on a gummy. A balanced, clear-headed lift
+          for wherever the evening goes.
+        </p>
+
+        <div class="spec-grid reveal" data-d="1">
+          <div class="spec">
+            <p class="t-value">10<span class="t-unit">mg</span></p>
+            <p class="t-label">&#916;9-THC</p>
+          </div>
+          <div class="spec">
+            <p class="t-value">15<span class="t-unit">min</span></p>
+            <p class="t-label">Onset</p>
+          </div>
+          <div class="spec">
+            <p class="t-value">2-3<span class="t-unit">hrs</span></p>
+            <p class="t-label">Duration</p>
+          </div>
+          <div class="spec">
+            <p class="t-value">0<span class="t-unit">g</span></p>
+            <p class="t-label">Sugar</p>
+          </div>
+        </div>
+
+        <p class="t-body reveal" data-d="2" style="font-size:.9375rem">
+          Blood orange, classic lemonade, passionfruit mango, watermelon.
+        </p>
+        <p class="inst-note reveal" data-d="2" style="margin:.35rem 0 2rem">Also in 5, 25, 50 and 100 mg.</p>
+
+        <div class="spot-actions reveal" data-d="2">
+          <a class="btn btn-primary" href="#collections">
+            Add to bag &middot; $24 <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+          </a>
+          <a class="btn btn-text" href="#standard">
+            See the certificate <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="plinth reveal" data-d="1">
+        <!-- The contour field that used to texture this card is gone: it
+             stood in for photography, and a contour map drawn over a
+             photograph of a mountain is the same idea told twice. -->
+        <div class="plinth-scene" aria-hidden="true"></div>
+        <div class="plinth-inner">
+          <div class="plinth-stage">
+            <span class="plinth-floor" aria-hidden="true"></span>
+            <svg class="plinth-can" viewBox="0 0 320 900" role="img" style="color:#2E4A34"
+                 aria-label="Sherpa Basecamp Seltzer can, Watermelon flavour, 10 mg THC">
+              <use href="#can-art"/><text class="can-flavor" x="160" y="752">WATERMELON</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REVIEWS — rail carries the collection metadata, main track
+     carries the voices. One quote leads. ═══ -->
+<section class="reviews band">
+  <div class="shell track">
+
+    <aside class="rail rail-sticky reveal" aria-label="About these reviews">
+      <div>
+        <p class="t-value" style="font-size:1.5rem">2,847</p>
+        <p class="t-label" style="color:var(--slate);margin:.4rem 0 0">Reviews</p>
+      </div>
+      <div>
+        <p class="t-sub" style="font-size:.8125rem">Verified buyers only</p>
+        <p class="t-body" style="font-size:.75rem;margin:.3rem 0 0">Collected after delivery by a third party.</p>
+      </div>
+    </aside>
+
+    <div>
+    <div class="section-head reveal">
+      <p class="t-label tag">Reviews<span class="tag-fact">Every format</span></p>
+      <h2 class="t-display t-lg">Guided, not sold to.</h2>
+    </div>
+
+    <div class="review-grid">
+      <div class="quote-lead reveal">
+        <div>
+          <div class="stars" role="img" aria-label="Rated 5 out of 5">
+            <svg width="15" height="15" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="15" height="15" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="15" height="15" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="15" height="15" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="15" height="15" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+          </div>
+          <blockquote>&ldquo;The dosing chart on the box is the first one I've ever actually trusted.&rdquo;</blockquote>
+        </div>
+        <div class="byline">
+          <span class="byline-initials" aria-hidden="true">MR</span>
+          <p>Maya Rend&oacute;n<span>Denver, CO &middot; Verified buyer</span></p>
+        </div>
+      </div>
+
+      <div class="quote-stack">
+        <div class="quote reveal" data-d="1">
+          <div class="stars" role="img" aria-label="Rated 5 out of 5">
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+          </div>
+          <blockquote>&ldquo;Switched my old dog to the pet chews after surgery. Two weeks in and he's back on the stairs by himself.&rdquo;</blockquote>
+          <div class="byline">
+            <span class="byline-initials" aria-hidden="true">DV</span>
+            <p>Dominic Vasquez<span>Asheville, NC &middot; Verified buyer</span></p>
+          </div>
+        </div>
+
+        <div class="quote reveal" data-d="2">
+          <div class="stars" role="img" aria-label="Rated 5 out of 5">
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+            <svg width="13" height="13" aria-hidden="true" viewBox="0 0 16 16"><use href="#i-star"/></svg>
+          </div>
+          <blockquote>&ldquo;The seltzers replaced my two-drink evenings entirely. No hangover, no wondering how strong it was.&rdquo;</blockquote>
+          <div class="byline">
+            <span class="byline-initials" aria-hidden="true">PS</span>
+            <p>Priya Sundaram<span>Austin, TX &middot; Verified buyer</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta band" id="guide">
+  <div class="topo" aria-hidden="true" style="color:var(--ivory);--to:.1;--tw:130%;--tl:-15%;--tt:-45%">
+    <svg viewBox="0 0 1200 900"><use href="#c-ridge"/></svg>
+  </div>
+  <div class="shell cta-grid">
+    <div>
+      <p class="t-label tag tag-lit reveal">Free guide<span class="tag-fact">8 pages</span></p>
+      <h2 class="t-display t-lg reveal">Get the dosing guide.</h2>
+      <p class="reveal" data-d="1">
+        Eight pages on onset, tolerance and what to do if you take too much.
+        Free, and we send it once.
+      </p>
+    </div>
+    <form class="field reveal" data-d="1" id="guide-form" novalidate>
+      <label class="t-label" for="email">Email address</label>
+      <div class="field-row">
+        <input id="email" name="email" type="email" required autocomplete="email"
+               placeholder="you@email.com" aria-describedby="form-note">
+        <button class="btn btn-light" type="submit">
+          Send it <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+      <p class="field-error" id="form-error" role="alert" hidden></p>
+      <p class="field-note" id="form-note">21+ only. One email, no list.</p>
+    </form>
+  </div>
+</section>
+
+</main>

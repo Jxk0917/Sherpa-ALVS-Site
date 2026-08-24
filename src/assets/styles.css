@@ -1,0 +1,885 @@
+/* ══════════════════════════════════════════════════════════════════
+   SHERPA — "The Field Manual"
+
+   Palette, type roles and button specs are fixed by the brand
+   guidelines (Sherpa Brand Guildlines.png) and are not design
+   variables. What this sheet decides is composition: a two-track
+   grid, a topographic material system standing in for photography,
+   and one signature element (the dose instrument).
+
+   TYPE ROLES
+     Rubik One ............ headlines, and the dose values you choose
+     Poppins SemiBold ..... sub-heads, labels, and measured readouts
+     Poppins Regular ...... body
+   The split between "dose you pick" (Rubik One) and "reading the
+   instrument gives back" (Poppins tabular) is deliberate: it keeps
+   the display face from doing every job on the page.
+
+   SHAPE SCALE
+     surfaces 18px · controls 6px · ticks and chips 4px
+   ══════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* Brand palette — guidelines §03. Fixed values. */
+  --crimson:#6A1529; --crimson-deep:#54101F; --crimson-lift:#7E1B32;
+  --ivory:#F7F4EF;   --paper:#FFFFFF;
+  /* Not a brand colour — the exact flat backdrop the product photography
+     was shot on, a few units warmer than --ivory. The bundle showcase's
+     floor is painted this in gen-bundle-cover.mjs and its panel has to
+     agree, or the image reads as a pasted rectangle on the tile. */
+  --shot-ground:#F3EEE5;
+  --charcoal:#1A1A1A;--charcoal-soft:#242424;
+  --slate:#6B6B6B;   --mist:#E5E5E5;
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.4,.44,1);
+
+  /* Elevation. Tints toward crimson so shadows sit in the palette
+     instead of greying the ivory ground. */
+  --lift-1:0 1px 2px rgba(26,26,26,.04), 0 6px 16px -10px rgba(106,21,41,.18);
+  --lift-2:0 1px 2px rgba(26,26,26,.05), 0 14px 30px -16px rgba(106,21,41,.24);
+  --lift-3:0 2px 4px rgba(26,26,26,.06), 0 24px 50px -26px rgba(106,21,41,.30);
+
+  /* Two-track grid. The rail carries measured metadata, never a
+     section label — labelling every section is the templated move. */
+  --shell:1280px;
+  --gut:clamp(1.25rem,4vw,2.75rem);
+  --rail:180px;
+  --track-gap:clamp(2rem,4vw,3.5rem);
+
+  --r-surface:18px; --r-control:6px; --r-chip:4px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  margin:0; font-family:'Poppins',system-ui,sans-serif;
+  background:var(--ivory); color:var(--charcoal);
+  line-height:1.7; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{ display:block; max-width:100%; }
+::selection{ background:var(--crimson); color:#fff; }
+
+/* Single fixed grain plate. Kept off scrolling containers so it never
+   forces a repaint mid-scroll. */
+body::after{
+  content:''; position:fixed; inset:0; z-index:90; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.05; mix-blend-mode:multiply;
+}
+
+.shell{ width:100%; max-width:var(--shell); margin-inline:auto; padding-inline:var(--gut); }
+
+/* ── Focus (WCAG 2.2 SC 2.4.11) ──────────────────────────────────
+   One ring for the whole page, drawn with outline rather than
+   box-shadow: a component's own elevation shadow can silently
+   outrank a box-shadow ring, and outline follows border-radius. */
+:focus-visible{ outline:2.5px solid var(--crimson); outline-offset:3px; border-radius:2px; }
+/* On crimson and charcoal grounds the ring switches to ivory. */
+.hero :focus-visible, .proof :focus-visible, .cta :focus-visible, .footer :focus-visible,
+.brandband :focus-visible, .tile-dark:focus-visible, .tile-crimson:focus-visible,
+.tile-deep:focus-visible, .announce :focus-visible{
+  outline-color:var(--ivory);
+}
+
+/* Rail + main. Collapses to a single column below the lg breakpoint;
+   the rail's content reflows above the main track as a metadata row. */
+.track{ display:grid; grid-template-columns:1fr; gap:1.75rem; }
+@media (min-width:1024px){
+  .track{ grid-template-columns:var(--rail) 1fr; gap:0 var(--track-gap); align-items:start; }
+}
+.rail{ display:flex; flex-direction:column; gap:1.4rem; }
+@media (max-width:1023px){
+  /* Single column: the rail reads as a footnote to the content it
+     annotates, so it follows rather than precedes it. */
+  .rail{ flex-direction:row; flex-wrap:wrap; gap:1.25rem 2.5rem; order:2;
+         padding-top:1.75rem; border-top:1px solid var(--mist); }
+  .rail > *{ flex:1 1 12rem; }
+}
+@media (min-width:1024px){ .rail-sticky{ position:sticky; top:6.5rem; } }
+
+/* ── Type ────────────────────────────────────────────────────────── */
+.t-display{ font-family:'Rubik One',system-ui,sans-serif; font-weight:400;
+            text-transform:uppercase; letter-spacing:-.038em; line-height:.88; }
+.t-xl{ font-size:clamp(2.75rem,6.6vw,5.25rem); }
+.t-lg{ font-size:clamp(2.1rem,4.6vw,3.75rem); }
+.t-md{ font-size:clamp(1.45rem,2.6vw,2.1rem); letter-spacing:-.03em; }
+.t-sub{ font-weight:600; letter-spacing:-.011em; line-height:1.35; }
+.t-body{ font-weight:400; line-height:1.72; color:var(--slate); max-width:62ch; }
+.t-label{ font-weight:600; font-size:.6875rem; letter-spacing:.15em;
+          text-transform:uppercase; line-height:1.2; }
+
+/* Measured values. Poppins SemiBold with tabular figures so columns of
+   numbers align and nothing shifts when a readout changes. */
+.t-value{ font-family:'Poppins',sans-serif; font-weight:600;
+          font-variant-numeric:tabular-nums lining-nums;
+          letter-spacing:-.02em; line-height:1; }
+.t-unit{ font-weight:600; font-size:.42em; letter-spacing:.07em;
+         text-transform:uppercase; color:var(--slate); margin-left:.34em; }
+
+.band{ padding-block:clamp(4rem,7.5vw,6.5rem); }
+.band-lg{ padding-block:clamp(5rem,10vw,8.5rem); }
+.band-sm{ padding-block:clamp(2rem,3.5vw,2.75rem); }
+
+/* ── Topographic material ────────────────────────────────────────
+   Stands in for photography. Colour comes from the parent via
+   currentColor, so one sprite serves every surface.               */
+.topo{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+.topo svg{ position:absolute; width:var(--tw,140%); height:auto;
+           top:var(--tt,-20%); left:var(--tl,-20%); opacity:var(--to,.18); }
+.surface{ position:relative; isolation:isolate; overflow:hidden; }
+.surface > *:not(.topo){ position:relative; z-index:1; }
+
+/* ── Buttons — guidelines §05 ────────────────────────────────────── */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.7rem;
+  font-family:'Poppins',sans-serif; font-weight:600; font-size:.8125rem;
+  letter-spacing:.085em; text-transform:uppercase; text-decoration:none;
+  padding:1rem 1.55rem; border-radius:var(--r-control);
+  border:1.5px solid transparent; cursor:pointer; white-space:nowrap;
+  transition:background-color .3s var(--ease), color .3s var(--ease),
+             border-color .3s var(--ease), box-shadow .3s var(--ease),
+             transform .2s var(--ease);
+}
+.btn .arw{ transition:transform .4s var(--ease); flex:none; }
+.btn:hover .arw{ transform:translateX(5px); }
+.btn:active{ transform:translateY(1px) scale(.99); }
+
+.btn-primary{ background:var(--crimson); color:#fff;
+              box-shadow:0 1px 2px rgba(26,26,26,.06),0 12px 22px -14px rgba(106,21,41,.55); }
+.btn-primary:hover{ background:var(--crimson-deep);
+                    box-shadow:0 2px 6px rgba(26,26,26,.08),0 18px 30px -16px rgba(106,21,41,.65); }
+
+.btn-secondary{ background:var(--paper); color:var(--crimson); border-color:var(--crimson); }
+.btn-secondary:hover{ background:#F1ECEC; }
+
+.btn-text{ padding:.5rem 0; border-radius:var(--r-chip); color:var(--crimson); background:none; }
+.btn-text:hover{ color:var(--crimson-deep); }
+.btn-text:active{ transform:none; }
+
+.btn-light{ background:var(--ivory); color:var(--charcoal); }
+.btn-light:hover{ background:#fff; }
+
+.btn-on-dark{ background:none; color:var(--ivory); border-color:rgba(247,244,239,.35); }
+.btn-on-dark:hover{ background:rgba(247,244,239,.1); border-color:var(--ivory); }
+
+/* ── Announcement + nav ──────────────────────────────────────────── */
+.announce{ background:var(--crimson-deep); color:var(--ivory); text-align:center;
+           padding:.7rem 1rem; font-size:.6875rem; font-weight:600;
+           letter-spacing:.15em; text-transform:uppercase;
+           border-bottom:1px solid rgba(247,244,239,.12); }
+
+/* The nav overlays the hero rather than sitting above it, so the
+   announcement bar, the nav and the hero read as one crimson field.
+   Sections carry scroll-margin to clear it when linked to. */
+.nav{ position:sticky; top:0; z-index:60; margin-bottom:-72px;
+      border-bottom:1px solid transparent;
+      transition:background-color .4s var(--ease), border-color .4s var(--ease),
+                 box-shadow .4s var(--ease); }
+section[id]{ scroll-margin-top:5.5rem; }
+.nav.stuck{
+  background:rgba(247,244,239,.94);
+  backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-color:rgba(26,26,26,.08); box-shadow:0 10px 30px -24px rgba(26,26,26,.5);
+}
+.nav-inner{ display:flex; align-items:center; justify-content:space-between;
+            gap:2rem; height:72px; }
+/* Two marks, cross-faded: the nav is transparent over the crimson
+   hero and ivory once it lifts off it. */
+.nav-logo{ position:relative; display:block; width:68px; height:30px; flex:none; }
+.nav-logo img{ position:absolute; inset:0; height:30px; width:auto;
+               transition:opacity .35s var(--ease); }
+.nav-logo .logo-light{ opacity:0; }
+.nav:not(.stuck) .nav-logo .logo-light{ opacity:1; }
+.nav:not(.stuck) .nav-logo .logo-dark{ opacity:0; }
+.nav:not(.stuck) .nav-link, .nav:not(.stuck) .iconbtn{ color:var(--ivory); }
+.nav:not(.stuck) .nav-link::after{ background:var(--ivory); }
+.nav:not(.stuck) .nav-link:hover, .nav:not(.stuck) .nav-link:focus-visible{ color:#fff; }
+.nav:not(.stuck) .iconbtn:hover{ background:rgba(247,244,239,.14); color:#fff; }
+.nav:not(.stuck) :focus-visible{ outline-color:var(--ivory); }
+.nav-links{ display:none; gap:1.75rem; }
+@media (min-width:1024px){ .nav-links{ display:flex; } }
+.nav-link{ position:relative; font-size:.8125rem; font-weight:500; color:var(--charcoal);
+           text-decoration:none; padding:.4rem 0; transition:color .28s var(--ease); }
+.nav-link::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:1.5px;
+                  background:var(--crimson); transform:scaleX(0); transform-origin:left;
+                  transition:transform .42s var(--ease); }
+.nav-link:hover, .nav-link:focus-visible{ color:var(--crimson); }
+.nav-link:hover::after, .nav-link:focus-visible::after{ transform:scaleX(1); }
+.nav-actions{ display:flex; align-items:center; gap:.25rem; }
+
+.iconbtn{ display:grid; place-items:center; width:40px; height:40px; border:0;
+          background:none; color:var(--charcoal); border-radius:9px; cursor:pointer;
+          transition:background-color .28s var(--ease), color .28s var(--ease),
+                     transform .2s var(--ease); }
+.iconbtn:hover{ background:rgba(106,21,41,.07); color:var(--crimson); }
+.iconbtn:active{ transform:scale(.93); }
+.cart-count{ position:absolute; transform:translate(11px,-11px); background:var(--crimson);
+             color:#fff; font-size:.5625rem; font-weight:600; min-width:15px; height:15px;
+             border-radius:999px; display:grid; place-items:center; padding:0 3px; }
+@media (min-width:1024px){ .nav-actions .iconbtn.only-mobile{ display:none; } }
+
+.menu-panel{ position:fixed; inset:0; z-index:70; background:var(--ivory);
+             height:100dvh; transform:translateY(-100%);
+             transition:transform .5s var(--ease); overflow-y:auto; }
+.menu-panel.open{ transform:translateY(0); }
+.menu-link{ display:flex; align-items:center; justify-content:space-between;
+            padding:1.15rem 0; border-bottom:1px solid var(--mist);
+            font-family:'Rubik One',sans-serif; text-transform:uppercase;
+            font-size:1.5rem; letter-spacing:-.03em; color:var(--charcoal);
+            text-decoration:none; transition:color .25s var(--ease); }
+.menu-link:hover{ color:var(--crimson); }
+.menu-link .arw{ color:var(--slate); }
+
+/* ── Hero — one crimson field, the line, the cans ─────────────────
+   The whole top of the page is a single crimson ground: the
+   announcement bar, the nav and the hero share it, so the nav reads
+   as part of the field rather than as a bar sitting on it.        */
+.hero{ position:relative; overflow:hidden; color:var(--ivory);
+       background:radial-gradient(115% 88% at 70% 44%,
+                 var(--crimson-lift) 0%, var(--crimson) 46%, var(--crimson-deep) 100%); }
+.hero-topo{ position:absolute; inset:0; pointer-events:none; z-index:0;
+            color:var(--ivory); overflow:hidden; }
+.hero-topo svg{ position:absolute; width:min(1400px,132%); height:auto;
+                right:-30%; top:-36%; opacity:.055; }
+.hero-grid{ position:relative; z-index:1; display:grid; align-items:center;
+            gap:clamp(1.75rem,4vw,3rem);
+            padding-block:calc(72px + clamp(1.5rem,4vw,2.5rem)) clamp(1.5rem,3vw,2.25rem); }
+@media (min-width:960px){
+  .hero-grid{ grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);
+              gap:clamp(1.5rem,3vw,2.5rem); min-height:min(80vh,700px);
+              padding-block:calc(72px + clamp(1rem,2vw,1.5rem)) clamp(1rem,2vw,1.5rem); }
+}
+.hero h1{ margin:0 0 clamp(1.75rem,3vw,2.5rem);
+          font-size:clamp(2.25rem,4.35vw,3.6rem); }
+.hero-actions{ display:flex; flex-wrap:wrap; gap:.75rem .9rem; }
+
+/* ── The cans ────────────────────────────────────────────────────
+   Sherpa has no product photography, so the seltzer is drawn (see
+   #can-art): the real wordmark on a cylinder, with a shading ramp
+   doing the curving. Same reasoning as the contour fields.        */
+.cans{ position:relative; height:clamp(310px,44vw,585px); }
+@media (max-width:959px){
+  /* justify-self rather than auto margins: the children are all
+     absolutely positioned, so an auto margin would collapse the
+     track to a zero-width box. */
+  .cans{ height:clamp(280px,58vw,400px); width:min(100%,520px); justify-self:center; }
+}
+.can-floor{ position:absolute; left:50%; bottom:1%; width:112%; height:22%;
+            transform:translateX(-50%); pointer-events:none;
+            background:radial-gradient(50% 50% at 50% 50%,
+                       rgba(20,4,9,.5) 0%, rgba(20,4,9,0) 72%); }
+.can-slot{ position:absolute; left:50%; bottom:0; height:100%; }
+.can-slot .can{ height:100%; width:auto;
+                filter:drop-shadow(0 22px 26px rgba(20,4,9,.42)); }
+.can-c{ transform:translateX(-50%); z-index:3; }
+.can-l{ height:87%; bottom:5%; transform:translateX(-134%) rotate(-4deg); z-index:2; }
+.can-r{ height:87%; bottom:5%; transform:translateX(34%)   rotate(4deg);  z-index:2; }
+.can-flavor{ font-family:'Poppins',sans-serif; font-weight:600; font-size:19px;
+             letter-spacing:.05em; text-anchor:middle; fill:var(--charcoal); }
+
+/* ── Dose section — the head annotates the instrument, so the two
+      sit side by side once there is room for it. ────────────────── */
+/* ── "Know your altitude" heading panel ─────────────────────────────
+   The heading sits on a photograph rather than on the bare band, which
+   makes the section read as two cards facing each other — the picture
+   and the instrument — instead of loose type beside a card.
+   The type sits at the BOTTOM of the panel on purpose: the plate is
+   cropped so the peak and the hiker occupy the top two thirds and his
+   jacket fills the last one, and a large soft mid-tone mass is the
+   easiest thing in any photograph to lay type over. */
+.dose-head{ position:relative; isolation:isolate; overflow:hidden;
+  border-radius:var(--r-surface); color:var(--ivory);
+  padding:clamp(1.5rem,3vw,2.5rem);
+  display:flex; align-items:flex-end;
+  min-height:clamp(300px,52vw,440px); }
+@media (min-width:1024px){
+  /* Overrides the grid's align-items:center for this cell only, so the
+     panel runs the full height of the instrument beside it. */
+  .dose-head{ align-self:stretch; min-height:0; }
+}
+/* Blur is deliberately slight — enough to settle the photograph behind
+   the type without turning it into an effect. inset:-5% because a blur
+   samples past its own box as transparent and would otherwise leave a
+   pale rim; .dose-head clips the overflow. */
+.dose-head-photo{ position:absolute; inset:-5%; z-index:0;
+  background:url('dose-hiker.jpg') center 78%/cover no-repeat;
+  filter:blur(3px) saturate(1.02) brightness(.92); }
+/* Scrim: near-nothing at the top so the peak stays visible, heavy by the
+   bottom where the words are. This is what keeps the picture from
+   competing with the type rather than the blur, which is only there to
+   take the edge off the detail. */
+.dose-head::after{ content:''; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(rgba(10,14,12,.16) 0%, rgba(10,14,12,.52) 46%,
+                             rgba(10,14,12,.8) 100%); }
+.dose-head-inner{ position:relative; z-index:2; }
+.dose-head p{ color:rgba(247,244,239,.86); }
+
+.dose-grid{ display:grid; gap:clamp(2rem,4vw,3rem); align-items:center; }
+@media (min-width:1024px){
+  .dose-grid{ grid-template-columns:minmax(0,.82fr) minmax(0,1fr); gap:clamp(3rem,5vw,4.5rem); }
+  .dose-grid .section-head{ margin-bottom:0; }
+}
+
+/* ── The dose instrument (signature) ─────────────────────────────── */
+.instrument{ background:var(--paper); border:1px solid rgba(26,26,26,.08);
+             border-radius:var(--r-surface); box-shadow:var(--lift-3);
+             overflow:hidden; }
+.inst-head{ display:flex; align-items:baseline; justify-content:space-between;
+            gap:1rem; padding:1.5rem clamp(1.25rem,2.6vw,2rem) 0; }
+.inst-head .t-label{ color:var(--slate); }
+.inst-scale{ padding:2.25rem clamp(1.25rem,2.6vw,2rem) 0; }
+
+.rail-wrap{ position:relative; }
+.stops{ display:flex; }
+.stop{ position:relative; flex:1 1 0; display:flex; flex-direction:column;
+       align-items:center; gap:.65rem; padding:0 0 .9rem; border:0; background:none;
+       cursor:pointer; color:var(--slate); transition:color .3s var(--ease); font:inherit; }
+.stop:hover{ color:var(--charcoal); }
+.stop:focus-visible{ outline:none; }
+.stop:focus-visible .stop-val{ outline:2.5px solid var(--crimson); outline-offset:3px;
+                               border-radius:var(--r-chip); }
+.stop-val{ font-family:'Rubik One',sans-serif; font-size:clamp(1.1rem,2.2vw,1.5rem);
+           letter-spacing:-.03em; line-height:1; padding:.15rem .32rem;
+           transition:color .3s var(--ease), transform .45s var(--ease-spring); }
+.stop-name{ font-size:.5625rem; font-weight:600; letter-spacing:.13em;
+            text-transform:uppercase; line-height:1; opacity:.6;
+            transition:opacity .3s var(--ease), color .3s var(--ease); }
+/* Five stops in one row runs the longest names (MICRODOSE, EXPEDITION)
+   into their neighbours below ~640px — tighten size and tracking rather
+   than let them overlap. */
+@media (max-width:640px){
+  .stop-name{ font-size:.4375rem; letter-spacing:.03em; }
+}
+.stop-tick{ width:1.5px; height:12px; background:var(--mist);
+            transition:background-color .3s var(--ease), height .45s var(--ease); }
+.stop[aria-checked="true"]{ color:var(--crimson); }
+.stop[aria-checked="true"] .stop-val{ color:var(--crimson); transform:translateY(-3px); }
+.stop[aria-checked="true"] .stop-name{ opacity:1; color:var(--crimson); }
+.stop[aria-checked="true"] .stop-tick{ background:var(--crimson); height:18px; }
+
+/* Graduations, drawn like a machinist's rule. */
+.graduations{ height:8px;
+  background-image:repeating-linear-gradient(to right,var(--mist) 0 1px,transparent 1px 10px);
+  background-repeat:no-repeat; background-position:left bottom; background-size:100% 5px; }
+.baseline{ height:1px; background:var(--mist); }
+.needle{ position:absolute; bottom:0; left:0; width:20%; display:grid; place-items:center;
+         pointer-events:none; transform:translateX(calc(var(--i,0) * 100%));
+         transition:transform .55s var(--ease-spring); }
+.needle-dot{ width:7px; height:7px; border-radius:999px; background:var(--crimson);
+             box-shadow:0 0 0 4px rgba(106,21,41,.13); transform:translateY(3px); }
+
+.inst-readout{ display:grid; gap:1.5rem 2.25rem; padding:1.75rem clamp(1.25rem,2.6vw,2rem);
+               grid-template-columns:auto auto; }
+@media (min-width:560px){ .inst-readout{ grid-template-columns:auto auto 1fr; } }
+.readout-val{ font-size:clamp(1.9rem,3.4vw,2.5rem); margin:.35rem 0 0; }
+.readout-label{ color:var(--slate); }
+.readout-feel{ font-size:1rem; margin:.3rem 0 0; max-width:34ch; grid-column:1 / -1; }
+@media (min-width:560px){ .readout-feel{ grid-column:3; margin-top:.35rem; } }
+.swap{ transition:opacity .18s ease, transform .18s ease; }
+.swapping .swap{ opacity:0; transform:translateY(4px); }
+
+.inst-foot{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+            gap:1.25rem; padding:1.25rem clamp(1.25rem,2.6vw,2rem);
+            border-top:1px solid var(--mist); background:#FBFAF8; }
+.inst-format .t-label{ color:var(--slate); }
+.inst-format p{ margin:.3rem 0 0; font-size:.9375rem; }
+.inst-note{ margin:1.25rem 0 0; font-size:.75rem; color:var(--slate); text-align:center; }
+@media (min-width:1024px){ .inst-note{ text-align:left; } }
+
+/* ── Guarantee strip ─────────────────────────────────────────────── */
+.guarantees{ border-block:1px solid var(--mist); }
+.guarantee-grid{ display:grid; gap:1.5rem 2rem; grid-template-columns:repeat(2,1fr); }
+@media (min-width:900px){ .guarantee-grid{ grid-template-columns:repeat(4,1fr); } }
+.guarantee{ display:flex; align-items:flex-start; gap:.7rem; }
+.guarantee svg{ color:var(--crimson); flex:none; margin-top:.05rem; }
+.guarantee span{ font-size:.75rem; font-weight:600; letter-spacing:.06em;
+                 text-transform:uppercase; line-height:1.45; color:var(--charcoal); }
+
+/* ── Collections bento ───────────────────────────────────────────── */
+/* The headline sets its own line breaks, so only the body copy is measured. */
+.section-head{ margin-bottom:clamp(2.5rem,4vw,3.5rem); }
+.section-head h2{ margin:0 0 1.1rem; }
+.section-head p{ margin:0; max-width:52ch; }
+
+.bento{ display:grid; gap:clamp(.85rem,1.4vw,1.15rem); grid-template-columns:1fr; }
+@media (min-width:680px){ .bento{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1024px){
+  .bento{ grid-template-columns:repeat(3,1fr); }
+  .b-gummies { grid-column:1 / span 2; }
+  .b-wellness{ grid-column:2 / span 2; }
+  .b-pet     { grid-column:1 / span 2; }
+  .b-bundles { grid-column:1 / span 3; }
+}
+.tile{ position:relative; display:flex; flex-direction:column; justify-content:flex-end;
+       min-height:250px; padding:clamp(1.4rem,2.2vw,1.85rem);
+       border-radius:var(--r-surface); text-decoration:none; overflow:hidden;
+       isolation:isolate; border:1px solid transparent; color:var(--charcoal);
+       transition:transform .45s var(--ease), box-shadow .45s var(--ease); }
+@media (min-width:1024px){
+  .b-gummies,.b-wellness,.b-pet{ min-height:300px; }
+}
+.tile:hover{ transform:translateY(-4px); box-shadow:var(--lift-2); }
+.tile > *{ position:relative; z-index:1; }
+.tile .tile-topo{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.tile .tile-topo svg{ position:absolute; width:150%; height:auto; opacity:.2;
+                      left:-25%; top:-30%;
+                      transition:transform .7s var(--ease); }
+.tile:hover .tile-topo svg{ transform:scale(1.06); }
+.tile-mark{ position:absolute; top:clamp(1.4rem,2.2vw,1.85rem); right:clamp(1.4rem,2.2vw,1.85rem);
+            z-index:1; opacity:.5; }
+.tile-meta{ margin:0 0 .5rem; }
+.tile h3{ margin:0 0 .5rem; font-family:'Rubik One',sans-serif; font-weight:400;
+          text-transform:uppercase; letter-spacing:-.03em; line-height:1;
+          font-size:clamp(1.35rem,2.1vw,1.75rem); }
+.tile p{ margin:0; font-size:.875rem; line-height:1.6; max-width:34ch; }
+
+/* ── Shop tiles — real product photography ───────────────────────
+   Two stacked zones instead of a text-over-topo overlay: a photo
+   band and a body band that keeps the tile's colour rhythm. The
+   source photos are pre-processed (gen-product-shots.mjs) to crop
+   tight to the product and recolour their flat backdrop to this
+   exact ivory, so the panel and the photo are one continuous
+   surface — no framed-thumbnail box, no seam to blend. Icon mark
+   moves inline since it no longer floats over an image. */
+.tile-shop{ padding:0; justify-content:flex-start; min-height:340px; }
+@media (min-width:1024px){
+  .tile-shop.b-gummies,.tile-shop.b-wellness,.tile-shop.b-pet{ min-height:440px; }
+  .tile-shop.b-drinks,.tile-shop.b-baked,.tile-shop.b-stix{ min-height:380px; }
+  .tile-shop.b-bundles{ min-height:300px; }
+  /* Full-width closer: side-by-side rather than stacked, the one
+     compositional break in the grid's rhythm. */
+  .tile-shop.b-bundles{ flex-direction:row; align-items:stretch; }
+  .tile-shop.b-bundles .tile-photo{ flex:1 1 58%; padding:1.5rem; }
+  .tile-shop.b-bundles .tile-body{ flex:1 1 42%; display:flex; flex-direction:column; justify-content:center; }
+}
+.tile-photo{ flex:1; min-height:0; display:flex; align-items:center; justify-content:center;
+             background:var(--ivory); padding:clamp(.5rem,1.4vw,1rem); overflow:hidden; }
+.tile-photo img{ max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;
+                  transition:transform .6s var(--ease); }
+/* The bundle is the one shot staged as a set rather than a lone product on
+   a flat sweep, so its image carries its own floor right out to the frame
+   edge instead of dissolving into the panel. The panel matches that floor
+   for the same reason the other six recolour theirs to --ivory: no seam
+   where photo meets panel. Outside the 1024px block on purpose — the tile
+   stacks below that but the seam would still be there. */
+.tile-shop.b-bundles .tile-photo{ background:var(--shot-ground); }
+.tile-shop:hover .tile-photo img{ transform:scale(1.03); }
+.tile-body{ padding:clamp(1.2rem,2vw,1.5rem) clamp(1.4rem,2.2vw,1.85rem) clamp(1.4rem,2.2vw,1.85rem); }
+.tile-body-head{ display:flex; align-items:center; gap:.55rem; margin:0 0 .5rem; }
+.tile-icon{ flex:none; opacity:.65; }
+
+.tile-dark{ background:var(--charcoal); color:var(--ivory); }
+.tile-dark .tile-topo{ color:var(--ivory); }
+.tile-dark .tile-meta{ color:rgba(247,244,239,.72); }
+.tile-dark p{ color:rgba(247,244,239,.74); }
+.tile-crimson{ background:var(--crimson); color:var(--ivory); }
+.tile-crimson .tile-topo{ color:var(--ivory); }
+.tile-crimson .tile-meta{ color:rgba(247,244,239,.78); }
+.tile-crimson p{ color:rgba(247,244,239,.78); }
+.tile-deep{ background:var(--crimson-deep); color:var(--ivory); }
+.tile-deep .tile-topo{ color:var(--ivory); }
+.tile-deep .tile-meta{ color:rgba(247,244,239,.78); }
+.tile-deep p{ color:rgba(247,244,239,.78); }
+.tile-paper{ background:var(--paper); border-color:rgba(26,26,26,.09); box-shadow:var(--lift-1); }
+.tile-paper h3{ color:var(--charcoal); }
+.tile-paper .tile-topo{ color:var(--crimson); }
+.tile-paper .tile-topo svg{ opacity:.16; }
+.tile-paper .tile-meta{ color:var(--crimson); }
+.tile-paper p{ color:var(--slate); }
+.tile-paper .tile-mark{ color:var(--crimson); opacity:.3; }
+.tile-paper .tile-icon{ color:var(--crimson); opacity:.55; }
+
+/* ── Brand band ──────────────────────────────────────────────────── */
+.brandband{ position:relative; background:var(--crimson); color:var(--ivory);
+            overflow:hidden; isolation:isolate; }
+.brandband::before{ content:''; position:absolute; inset:0; z-index:0;
+  background:radial-gradient(60% 100% at 50% 130%, rgba(26,26,26,.4), transparent 70%); }
+.brandband-inner{ position:relative; z-index:2; display:flex; flex-direction:column;
+                  align-items:center; text-align:center; gap:1.75rem; }
+.brandband img{ height:clamp(58px,7vw,86px); width:auto; }
+.brandband h2{ margin:0; }
+.brandband p{ margin:0; color:rgba(247,244,239,.82); max-width:44ch; font-size:1rem; }
+
+/* ── Proof band ──────────────────────────────────────────────────── */
+.proof{ position:relative; background:var(--charcoal); color:var(--ivory);
+        overflow:hidden; isolation:isolate; }
+.proof::before{ content:''; position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(52% 42% at 6% 0%,  rgba(126,27,50,.32), transparent 64%),
+    radial-gradient(46% 40% at 98% 18%,rgba(106,21,41,.34), transparent 62%);
+}
+.proof > *{ position:relative; z-index:2; }
+.proof .t-body{ color:rgba(247,244,239,.72); }
+.proof-grid{ display:grid; gap:clamp(2.5rem,5vw,4rem); align-items:start; }
+@media (min-width:1024px){ .proof-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); } }
+.proof h2{ margin:0 0 1.35rem; }
+.feature{ display:flex; gap:.9rem; margin-top:1.75rem; }
+.feature svg{ color:var(--ivory); opacity:.75; flex:none; margin-top:.2rem; }
+.feature h3{ margin:0 0 .25rem; font-size:.9375rem; font-weight:600; }
+.feature p{ margin:0; font-size:.875rem; color:rgba(247,244,239,.66); line-height:1.6; }
+
+/* Certificate. Grouped into a potency block and a safety block rather
+   than one long hairline table. */
+.coa{ background:rgba(247,244,239,.05); border:1px solid rgba(247,244,239,.14);
+      border-radius:var(--r-surface); overflow:hidden;
+      backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); }
+.coa-head{ display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
+           padding:1.15rem 1.4rem; border-bottom:1px solid rgba(247,244,239,.14);
+           background:rgba(247,244,239,.04); }
+.coa-head .t-label{ color:rgba(247,244,239,.6); }
+.coa-batch{ margin:0; font-size:.9375rem; font-weight:600; padding:1.15rem 1.4rem .35rem; }
+.coa-rows{ padding:0 1.4rem .35rem; }
+.coa-row{ display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
+          padding:.6rem 0; font-size:.875rem; }
+.coa-row + .coa-row{ border-top:1px solid rgba(247,244,239,.09); }
+.coa-row dt{ color:rgba(247,244,239,.62); }
+.coa-row dd{ margin:0; font-weight:600; font-variant-numeric:tabular-nums; }
+.coa-safety{ padding:1.15rem 1.4rem 1.4rem; }
+.coa-safety .t-label{ color:rgba(247,244,239,.6); display:block; margin-bottom:.85rem; }
+.chips{ display:grid; grid-template-columns:repeat(2,1fr); gap:.5rem; }
+.chip{ display:flex; align-items:center; gap:.5rem; padding:.55rem .7rem;
+       border-radius:var(--r-chip); background:rgba(247,244,239,.06);
+       font-size:.75rem; font-weight:600; }
+.chip svg{ color:#8FBF8F; flex:none; }
+
+.stats{ display:grid; gap:2rem 1.5rem; grid-template-columns:repeat(2,1fr);
+        margin-top:clamp(3rem,5vw,4.5rem); padding-top:clamp(2.5rem,4vw,3.25rem);
+        border-top:1px solid rgba(247,244,239,.16); }
+@media (min-width:820px){ .stats{ grid-template-columns:repeat(4,1fr); } }
+.stat p{ margin:0; }
+.stat .t-value{ font-size:clamp(2rem,3.4vw,2.75rem); }
+.stat .t-unit{ color:rgba(247,244,239,.6); }
+.stat .t-label{ color:rgba(247,244,239,.6); margin-top:.55rem; }
+
+/* ── Spotlight ───────────────────────────────────────────────────── */
+/* This card has been through the dose number alone, then a real can
+   photo. It now draws the can with #can-art, the same symbol the hero
+   is built from, so the site's two hero product moments share one
+   drawing rather than mixing an illustration with a photograph.
+   Its own dose badge went with the photo: the drawing states "10MG THC"
+   on the can face, and the spec-grid beside it already says 10mg, so a
+   third "10 MG" in the corner was the one element making the card feel
+   busy rather than composed. */
+/* Base colour is what shows in the moment before plinth-peak.jpg paints,
+   and if it ever fails to load. Deep slate, picked off the photograph's own
+   darkened edge, rather than --crimson: the card carries no brand colour
+   any more, and crimson here only bought a red flash on first paint. */
+.plinth{ position:relative; border-radius:var(--r-surface); overflow:hidden;
+         background:#141A22; color:var(--ivory); isolation:isolate;
+         padding:clamp(1.75rem,3.5vw,2.5rem);
+         /* A definite height, not min-height: .plinth-can sizes itself as
+            a percentage of this, and a percentage needs something to
+            resolve against. With only min-height the box's used height is
+            "auto", the percentage never resolves, and the can renders at
+            full intrinsic size — which blew the card out to ~540px. */
+         height:clamp(320px,40vw,460px); }
+/* Below the two-column breakpoint the card goes full width while its one
+   subject stays a tall narrow can, which left it stranded in a lot of
+   empty background at tablet sizes. Capping the width keeps the card in
+   proportion to what is standing in it. justify-self rather than an auto
+   margin, for the same reason .cans uses it. */
+@media (max-width:899px){
+  .plinth{ justify-self:center; width:min(100%,520px); }
+}
+/* ── The plinth's scene ──────────────────────────────────────────────
+   The photograph, plain. No blur, no mask, no filter — one element and
+   one background.
+   Three blur treatments were built here before this and all three came
+   out. Keeping the short version, because each failed for its own reason
+   and they are easy to re-propose:
+     - sharp middle / blurred edges (a normal spotlight) read as a photo
+       pasted into the card; the crisp rectangle in the centre had a hard
+       visual boundary and took the eye off the product.
+     - uniformly blurred fixed that but flattened the picture to mush.
+     - inverted spotlight (heaviest blur behind the can, easing outward)
+       was the best of them, and still came out in favour of this.
+   `inset:0`, not the -6% bleed those versions needed: the bleed existed
+   only so the blurs had real pixels to sample past the frame's edge, and
+   without a blur it just crops the photograph for nothing. */
+.plinth-scene{ position:absolute; inset:0; z-index:0;
+  background:url('plinth-peak.jpg') center/cover no-repeat; }
+/* Scrim: a light neutral weighting on the lower half only, where the can's
+   base sits — the one place the picture and the product genuinely compete,
+   since the can's base band is ivory and the snow behind it is not far
+   off. Not part of the blur work, so it stayed when that came out.
+   No brand colour goes on this image. Two earlier passes put it there — a
+   crimson wash over the whole plate, then a crimson glow around the edge —
+   and both were removed. If a third is ever attempted, the failure mode
+   both times was the same: the photograph's largest area is deep blue sky,
+   and crimson over blue is violet. */
+.plinth::before{ content:''; position:absolute; inset:0; z-index:1;
+  pointer-events:none;
+  background:linear-gradient(rgba(8,10,16,0) 46%, rgba(8,10,16,.34)); }
+.plinth-inner{ position:relative; z-index:2; height:100%;
+               display:flex; align-items:flex-end; justify-content:center; }
+/* Stage carries the can and its floor together so the two can never
+   drift apart. Width is the can's own (shrink-to-fit flex item), which
+   is what the floor's percentage width is measured against. */
+.plinth-stage{ position:relative; height:100%; display:flex;
+               align-items:flex-end; justify-content:center; }
+/* The pool the can stands in, same device as the hero's .can-floor —
+   without it a drop-shadow alone leaves the can hovering on the crimson.
+   Wider than the can and soft to the edges so it reads as light falling
+   off, not as an ellipse drawn under it. */
+.plinth-floor{ position:absolute; left:50%; bottom:0; width:250%; height:20%;
+               transform:translateX(-50%); pointer-events:none;
+               background:radial-gradient(50% 50% at 50% 50%,
+                          rgba(20,4,9,.62) 0%, rgba(20,4,9,0) 70%); }
+/* height, not max-height: an inline SVG sizes from its viewBox ratio, and
+   the percentage resolves because .plinth has a definite height. */
+.plinth-can{ position:relative; height:88%; width:auto;
+             filter:drop-shadow(0 26px 30px rgba(20,4,9,.42)); }
+
+/* ── Spotlight section — full-bleed photographic band ────────────────
+   The photograph runs edge to edge behind the whole section, not inside
+   .shell, which is why .spot-scene is a child of the <section> and the
+   shell is lifted above it on z-index.
+   The picture is context, so it is treated as texture rather than as an
+   image to look at: blurred enough that no detail competes with the
+   heading, and darkened enough that ivory type sits on it cleanly. The
+   plate is also flipped in gen-spot-bg.mjs so the dark fleece falls under
+   the copy and the bright out-of-focus half falls on the right, where the
+   plinth card covers most of it — without that, the left column would
+   have needed a scrim heavy enough to erase the photograph entirely. */
+.spotlight{ position:relative; isolation:isolate; overflow:hidden;
+            color:var(--ivory); }
+.spotlight > .shell{ position:relative; z-index:2; }
+.spot-scene{ position:absolute; inset:-3%; z-index:0;
+  background:url('spot-jacket.jpg') center/cover no-repeat;
+  filter:blur(6px) saturate(1.06) brightness(.8); }
+/* Scrim. The base wash sets the floor everywhere; the horizontal ramp
+   adds weight on the left, under the type, and eases off toward the
+   plinth so the snow texture still reads on that side. */
+.spotlight::after{ content:''; position:absolute; inset:0; z-index:1;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(9,16,14,.48) 0%, rgba(9,16,14,.2) 54%, rgba(9,16,14,.44) 100%),
+    linear-gradient(rgba(9,16,14,.34), rgba(9,16,14,.46)); }
+.spotlight .t-body{ color:rgba(247,244,239,.82); }
+.spotlight .inst-note{ color:rgba(247,244,239,.62); }
+/* .btn-text is crimson by default, which all but disappears on this band. */
+.spotlight .btn-text{ color:var(--ivory); }
+.spotlight .btn-text:hover{ color:#fff; }
+/* No .section-head here, so the h2 would otherwise take the UA margin
+   and open a gap under the tag. */
+.spotlight h2{ margin:0; }
+
+.spot-grid{ display:grid; gap:clamp(2.5rem,4vw,3.5rem); align-items:center; }
+@media (min-width:900px){ .spot-grid{ grid-template-columns:minmax(0,1fr) minmax(0,.92fr); } }
+/* Spec tiles go to glass on the photographic band. Solid white panels
+   read as four bright holes punched in the picture; a translucent fill
+   over a 1px light rule keeps the same grid while letting the texture
+   carry through it. */
+.spec-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+            background:rgba(247,244,239,.16); border:1px solid rgba(247,244,239,.16);
+            border-radius:var(--r-surface); overflow:hidden; margin:2rem 0; }
+@media (min-width:520px){ .spec-grid{ grid-template-columns:repeat(4,1fr); } }
+.spec{ background:rgba(14,22,19,.5); padding:1.15rem 1.1rem;
+       -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
+.spec .t-value{ font-size:clamp(1.4rem,2.4vw,1.75rem); }
+.spec .t-unit{ font-size:.5em; color:rgba(247,244,239,.7); }
+.spec .t-label{ color:rgba(247,244,239,.68); margin-top:.5rem; }
+.spot-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:1rem 1.75rem; }
+
+/* ── Reviews ─────────────────────────────────────────────────────── */
+.reviews{ background:var(--paper); border-block:1px solid var(--mist); }
+.review-grid{ display:grid; gap:clamp(1rem,1.6vw,1.35rem); }
+@media (min-width:900px){ .review-grid{ grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); } }
+.quote-lead{ background:var(--ivory); border-radius:var(--r-surface);
+             padding:clamp(1.75rem,3vw,2.5rem); display:flex; flex-direction:column;
+             justify-content:space-between; gap:2rem; }
+.quote-lead blockquote{ margin:0; font-family:'Rubik One',sans-serif; font-weight:400;
+                        text-transform:uppercase; letter-spacing:-.03em; line-height:1.12;
+                        font-size:clamp(1.45rem,2.7vw,2.15rem); }
+.quote-stack{ display:grid; gap:clamp(1rem,1.6vw,1.35rem); align-content:start; }
+.quote{ border:1px solid var(--mist); border-radius:var(--r-surface);
+        padding:clamp(1.35rem,2.2vw,1.75rem); }
+.quote blockquote{ margin:0 0 1.1rem; font-size:.9375rem; line-height:1.65; }
+.stars{ display:flex; gap:.15rem; color:var(--crimson); margin-bottom:1rem; }
+.byline{ display:flex; align-items:center; gap:.7rem; }
+.byline-initials{ width:36px; height:36px; border-radius:999px; flex:none;
+                  display:grid; place-items:center; background:var(--crimson); color:#fff;
+                  font-size:.6875rem; font-weight:600; letter-spacing:.04em; }
+.byline p{ margin:0; font-size:.8125rem; font-weight:600; line-height:1.35; }
+/* Scoped to the name block. A bare `.byline span` also matched
+   .byline-initials and outranked it on specificity. */
+.byline p span{ display:block; font-weight:400; font-size:.75rem; color:var(--slate); }
+
+/* ── CTA ─────────────────────────────────────────────────────────── */
+.cta{ position:relative; background:var(--crimson); color:var(--ivory);
+      overflow:hidden; isolation:isolate; }
+.cta::before{ content:''; position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(50% 50% at 4% 0%,  rgba(255,255,255,.09), transparent 62%),
+    radial-gradient(70% 60% at 50% 120%,rgba(26,26,26,.36), transparent 70%);
+}
+.cta > *{ position:relative; z-index:2; }
+.cta-grid{ display:grid; gap:clamp(2.25rem,4vw,3.5rem); align-items:center; }
+@media (min-width:900px){ .cta-grid{ grid-template-columns:minmax(0,1fr) minmax(0,.85fr); } }
+.cta h2{ margin:0 0 1.1rem; }
+.cta p{ margin:0; color:rgba(247,244,239,.84); max-width:44ch; }
+.field label{ display:block; margin-bottom:.55rem; color:var(--ivory); }
+.field-row{ display:flex; gap:.65rem; flex-wrap:wrap; }
+.field input{ flex:1 1 15rem; min-width:0; font:inherit; font-size:.9375rem;
+              padding:1rem 1.1rem; border-radius:var(--r-control);
+              border:1.5px solid rgba(247,244,239,.4); background:rgba(255,255,255,.1);
+              color:var(--ivory);
+              transition:border-color .3s var(--ease), background-color .3s var(--ease); }
+.field input::placeholder{ color:rgba(247,244,239,.72); }
+.field input:hover{ border-color:rgba(247,244,239,.6); }
+/* No outline reset here: the page-wide :focus-visible ring must survive. */
+.field input:focus{ border-color:var(--ivory); background:rgba(255,255,255,.16); }
+.field input[aria-invalid="true"]{ border-color:#FFC9C9; background:rgba(255,90,90,.14); }
+.field-note{ margin:.85rem 0 0; font-size:.75rem; color:rgba(247,244,239,.78); }
+.field-error{ margin:.7rem 0 0; font-size:.8125rem; font-weight:600; color:#FFD5D5;
+              display:flex; align-items:center; gap:.4rem; }
+.field-error[hidden]{ display:none; }
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+.footer{ background:var(--charcoal); color:var(--ivory); }
+.footer-grid{ display:grid; gap:2.5rem; grid-template-columns:repeat(2,1fr); }
+@media (min-width:720px){ .footer-grid{ grid-template-columns:1.4fr repeat(3,1fr); } }
+.footer-brand img{ height:34px; width:auto; margin-bottom:1.25rem; }
+.footer-brand p{ margin:0 0 1.5rem; font-size:.8125rem; line-height:1.65;
+                 color:rgba(247,244,239,.62); max-width:30ch; }
+.footer h3{ margin:0 0 1.15rem; font-size:.6875rem; font-weight:600; letter-spacing:.15em;
+            text-transform:uppercase; color:rgba(247,244,239,.55); }
+.footer ul{ list-style:none; margin:0; padding:0; display:grid; gap:.45rem; }
+/* padding-block lifts each link to a 24px target (WCAG 2.2 SC 2.5.8)
+   without changing the visual rhythm of the column. */
+.footer a{ display:inline-block; font-size:.875rem; padding-block:.16rem;
+           color:rgba(247,244,239,.8); text-decoration:none;
+           transition:color .25s var(--ease); }
+.footer a:hover{ color:var(--ivory); }
+.social{ display:flex; gap:.4rem; }
+.social a{ display:grid; place-items:center; width:36px; height:36px; border-radius:9px;
+           color:rgba(247,244,239,.7); transition:background-color .25s var(--ease),
+           color .25s var(--ease); }
+.social a:hover{ background:rgba(247,244,239,.1); color:var(--ivory); }
+.legal{ margin-top:clamp(3rem,5vw,4rem); padding-top:2rem;
+        border-top:1px solid rgba(247,244,239,.14);
+        display:flex; flex-wrap:wrap; justify-content:space-between; gap:1.5rem 2rem; }
+.legal p{ margin:0 0 .85rem; font-size:.6875rem; line-height:1.7;
+          color:rgba(247,244,239,.5); max-width:62ch; }
+.legal-links{ display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; align-self:flex-end; }
+.legal-links a{ font-size:.75rem; padding-block:.3rem; color:rgba(247,244,239,.6); }
+
+/* ── Utilities ───────────────────────────────────────────────────── */
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+          overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+.skip{ position:absolute; left:.75rem; top:-4rem; z-index:100; background:var(--crimson);
+       color:#fff; padding:.75rem 1.1rem; border-radius:var(--r-control);
+       font-size:.8125rem; font-weight:600; text-decoration:none;
+       transition:top .25s var(--ease); }
+.skip:focus{ top:.75rem; }
+
+/* ── Section tag ─────────────────────────────────────────────────
+   A capsule above each section headline, carrying the section's name
+   and one measured fact, so it adds information the headline doesn't.
+
+   The material is a web approximation of Apple's frosted glass, not
+   Apple's Liquid Glass, which is a native platform API with no CSS
+   equivalent: a translucent fill, a hairline edge, an inset gloss along
+   the top for the lit edge, and a tinted cast underneath. Blur is only
+   declared where something actually sits behind the capsule for it to
+   work on, since on a flat fill it costs a filter and shows nothing.
+
+   Shape rule for the page: labels are capsules, controls are 6px,
+   surfaces are 18px. This is the only full radius on the page.
+
+   Lives at the end of the component styles on purpose. Several bands
+   colour their own paragraphs (.cta p, .dose-head p, .section-head p),
+   which are all (0,1,1) and would otherwise outrank a single-class
+   rule; hence the source position and the doubled .tag.tag-smoke.
+   ────────────────────────────────────────────────────────────────── */
+.tag{
+  --tag-ink:var(--crimson);
+  --tag-fill-a:rgba(106,21,41,.11);
+  --tag-fill-b:rgba(106,21,41,.04);
+  --tag-edge:rgba(106,21,41,.15);
+  --tag-rule:rgba(106,21,41,.22);
+  --tag-gloss:rgba(255,255,255,.8);
+  --tag-cast:0 8px 20px -12px rgba(106,21,41,.5);
+
+  display:inline-flex; align-items:center; vertical-align:top;
+  /* .t-label's trailing letter-space already pads the right edge by
+     .15em on its own, so that much comes back off the padding. */
+  padding:.5rem calc(.92rem - .15em) .5rem .92rem;
+  margin:0 0 1.15rem; line-height:1;
+  border:1px solid var(--tag-edge);
+  border-radius:999px;
+  background:linear-gradient(150deg, var(--tag-fill-a), var(--tag-fill-b));
+  color:var(--tag-ink);
+  box-shadow:inset 0 1px 0 var(--tag-gloss), var(--tag-cast);
+}
+.section-head .tag{ margin:0 0 1.15rem; }
+
+/* The fact half, set behind the name and divided by a hairline rather
+   than a middot: the same hairline the spec grid is built from. */
+.tag-fact{ margin-left:.74rem; padding-left:.74rem;
+           border-left:1px solid var(--tag-rule); opacity:.72; }
+
+/* Photographic grounds. The only place the blur has real material to
+   work on, so this is the only variant that declares one. */
+.tag.tag-smoke{
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+          backdrop-filter:blur(14px) saturate(150%);
+  --tag-ink:var(--ivory);
+  --tag-fill-a:rgba(8,7,8,.44);
+  --tag-fill-b:rgba(8,7,8,.18);
+  --tag-edge:rgba(247,244,239,.22);
+  --tag-rule:rgba(247,244,239,.3);
+  --tag-gloss:rgba(255,255,255,.22);
+  --tag-cast:0 10px 24px -14px rgba(0,0,0,.7);
+}
+
+/* Flat crimson and charcoal grounds. Smoke has nothing to darken on a
+   solid fill, so the capsule lifts instead. */
+.tag.tag-lit{
+  --tag-ink:var(--ivory);
+  --tag-fill-a:rgba(247,244,239,.17);
+  --tag-fill-b:rgba(247,244,239,.06);
+  --tag-edge:rgba(247,244,239,.24);
+  --tag-rule:rgba(247,244,239,.32);
+  --tag-gloss:rgba(255,255,255,.3);
+  --tag-cast:0 10px 24px -14px rgba(0,0,0,.4);
+}
+
+/* Blur is the whole effect on the photographic bands, so where it is
+   switched off the capsule has to hold that contrast on its own. */
+@media (prefers-reduced-transparency:reduce){
+  .tag.tag-smoke{ -webkit-backdrop-filter:none; backdrop-filter:none;
+                  --tag-fill-a:rgba(8,7,8,.74); --tag-fill-b:rgba(8,7,8,.74); }
+}
+
+@media (max-width:420px){
+  .tag{ font-size:.625rem; letter-spacing:.12em;
+        padding:.44rem calc(.8rem - .12em) .44rem .8rem; }
+}
+
+/* ── Motion ──────────────────────────────────────────────────────── */
+.reveal{ opacity:0; transform:translateY(22px);
+         transition:opacity .75s var(--ease), transform .75s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal[data-d="1"]{ transition-delay:.08s; }
+.reveal[data-d="2"]{ transition-delay:.16s; }
+.reveal[data-d="3"]{ transition-delay:.24s; }
+
+/* Hero load sequence. Runs once, on load, to establish reading order. */
+@keyframes rise{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:none; } }
+.enter{ opacity:0; animation:rise .85s var(--ease) forwards; }
+.enter[data-d="1"]{ animation-delay:.1s; }
+.enter[data-d="2"]{ animation-delay:.2s; }
+.enter[data-d="3"]{ animation-delay:.34s; }
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important; scroll-behavior:auto !important;
+  }
+  .reveal{ opacity:1; transform:none; }
+  .enter{ opacity:1; animation:none; }
+}
