@@ -6,6 +6,9 @@
 <title>{% if title %}{{ title }}{% else %}Sherpa{% endif %}</title>
 <meta name="description" content="{{ description }}">
 <meta name="theme-color" content="#6A1529">
+{%- if isAlphaPreview %}
+<meta name="robots" content="noindex, nofollow">
+{%- endif %}
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

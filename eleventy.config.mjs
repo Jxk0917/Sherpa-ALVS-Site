@@ -40,6 +40,11 @@ export default function (eleventyConfig) {
   // every hand-written /assets/... link stays broken.
   eleventyConfig.addPlugin(HtmlBasePlugin);
 
+  // A prefixed build is the alpha preview, which still carries placeholder
+  // prices and half-written legal pages — it must stay out of search
+  // results. The root build (the real domain) drops the tag entirely.
+  eleventyConfig.addGlobalData("isAlphaPreview", PATH_PREFIX !== "/");
+
   // Images, the extracted styles.css/main.js, and the icon sprite all live
   // under src/assets/ and pass through untouched — Eleventy only processes
   // *.html/*.njk, everything else in the input tree is copied as-is unless
