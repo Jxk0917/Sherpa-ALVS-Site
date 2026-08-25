@@ -33,7 +33,11 @@ jobs:
       # output is committed under src/assets, so CI never runs it.
       - run: npm ci
 
+      # Served from the GitHub Pages project URL, which lives under a
+      # subpath. Set this to "/" once alpha.sherpa.com is the live target.
       - run: npm run build
+        env:
+          PATH_PREFIX: Sherpa-ALVS-Site
 
       - uses: actions/configure-pages@v5
 

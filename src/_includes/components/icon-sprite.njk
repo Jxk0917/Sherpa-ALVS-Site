@@ -99,7 +99,8 @@
   <text x="160" y="316" text-anchor="middle" font-family="Poppins,sans-serif"
         font-weight="600" font-size="12" letter-spacing="2.2" fill="#F7F4EF" fill-opacity=".82">SA, TX</text>
   <!-- wordmark -->
-  <image href="/assets/logo-white.png" x="26" y="380" width="268" height="118"
+  {#- HtmlBasePlugin does not rewrite SVG <image href>, so apply pathPrefix here. -#}
+  <image href="{{ '/assets/logo-white.png' | url }}" x="26" y="380" width="268" height="118"
          transform="rotate(-5 160 439)"/>
   <text x="284" y="552" text-anchor="end" font-family="Poppins,sans-serif" font-weight="600"
         font-size="20" letter-spacing="6" fill="#F7F4EF" fill-opacity=".92">THC</text>
