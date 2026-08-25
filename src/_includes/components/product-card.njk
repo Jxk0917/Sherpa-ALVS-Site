@@ -1,0 +1,49 @@
+{# ═══ PRODUCT CARD ═══
+   One card, three callers: Shop All, the six family pages, and the
+   "more from this family" rail on a product page.
+
+   A product with no photography falls back to the topo contour field
+   rather than to a grey box or an invented photo. That is the
+   established answer here for missing product art, and it keeps an
+   unfinished card on-brand while still reading as unfinished: the
+   placeholder chip does that job, not the image. #}
+
+{% macro card(p, families, delay) %}
+{%- set fam = families | find("slug", p.family) -%}
+<a class="pcard{% if p.status == 'placeholder' %} pcard-todo{% endif %} reveal"
+   {% if delay %}data-d="{{ delay }}"{% endif %}
+   href="/shop/{{ p.family }}/{{ p.slug }}/">
+
+  <div class="pcard-photo">
+    {%- if p.image %}
+    <img src="{{ p.image }}" alt="{{ p.imageAlt }}" loading="lazy">
+    {%- else %}
+    <div class="pcard-topo" aria-hidden="true">
+      <svg viewBox="0 0 1200 900"><use href="#c-ridge"/></svg>
+    </div>
+    <p class="pcard-noart" aria-hidden="true">No photography yet</p>
+    {%- endif %}
+  </div>
+
+  <div class="pcard-body">
+    <div class="pcard-line">
+      <svg class="pcard-icon" width="18" height="18" aria-hidden="true" viewBox="0 0 24 24"><use href="#{{ fam.icon }}"/></svg>
+      <p class="t-label pcard-fam">{{ fam.name }}</p>
+    </div>
+
+    <h3>{{ p.name }}</h3>
+    <p class="pcard-tag">{{ p.tagline }}</p>
+
+    <div class="pcard-foot">
+      <span class="pcard-price">
+        {%- if p.variants %}From {% endif -%}
+        {{ p.price | price }}
+        {%- if p.status == 'placeholder' or p.price == null %}<span class="flag">Placeholder</span>{% endif %}
+      </span>
+      {%- if p.doses.length %}
+      <span class="pcard-dose">{{ p.doses | doseList }}</span>
+      {%- endif %}
+    </div>
+  </div>
+</a>
+{% endmacro %}

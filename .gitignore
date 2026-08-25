@@ -1,2 +1,10 @@
 node_modules/
 _site/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

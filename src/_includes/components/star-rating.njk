@@ -1,0 +1,15 @@
+{# ═══ STAR RATING ═══
+   A five-icon row drawn twice and stacked: a muted background layer
+   (always five icons) and a crimson foreground layer clipped to the
+   rating's own percentage of the same row, so a 4.5 renders as a
+   genuine partial star rather than rounding to 4 or 5. Both layers
+   share one icon row and one gap value so they stay pixel-aligned. #}
+
+{% macro stars(rating, size) %}
+{%- set pct = (rating / 5 * 100) -%}
+<span class="stars-rating{% if size == 'sm' %} stars-rating-sm{% endif %}"
+      role="img" aria-label="Rated {{ rating }} out of 5">
+  <span class="stars-bg" aria-hidden="true">{%- for i in range(0, 5) %}<svg viewBox="0 0 16 16"><use href="#i-star"/></svg>{% endfor -%}</span>
+  <span class="stars-fg" aria-hidden="true" style="width:{{ pct }}%">{%- for i in range(0, 5) %}<svg viewBox="0 0 16 16"><use href="#i-star"/></svg>{% endfor -%}</span>
+</span>
+{% endmacro %}

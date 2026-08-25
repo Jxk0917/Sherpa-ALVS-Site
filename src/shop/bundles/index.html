@@ -1,0 +1,110 @@
+---
+layout: layouts/base.njk
+title: "Bundles · Sherpa"
+description: "Build a kit across formats and pay one price. Three starting points, or pick your own six."
+---
+
+{%- set ph = {
+  eyebrow: "Bundles",
+  fact: "Save up to 25%",
+  heading: "Pack for<br>the climb.",
+  blurb: "Most people do not stay in one format. A bundle is how you try the range without buying six things at full price.",
+  crumbs: [{ label: "Shop", url: "/shop/" }, { label: "Bundles" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+<!-- ═══ THE SET ═══
+     Bundles is hand-authored rather than templated: it is a
+     merchandising page, not a family, and the composite shot is the
+     whole argument. -->
+<section class="band">
+  <div class="shell bundle-hero">
+    <div class="bundle-hero-photo reveal">
+      <img src="/assets/product-bundle.png" width="1400" height="580"
+           alt="A Sherpa bundle: gummies, seltzers, Quick Stix, krispies, roll-on and pet treats together">
+    </div>
+    <div class="reveal" data-d="1">
+      <h2 class="t-display t-md">Everything, once.</h2>
+      <p class="t-body" style="margin-top:1.1rem">
+        Every family in the range, in one box, at one price. The fastest way to find out which
+        format actually suits you before committing to a case of it.
+      </p>
+      <p class="notice notice-todo" style="margin-top:1.5rem">
+        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
+        Bundle pricing and contents are placeholders. Supply the real kits and this page fills in.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE KITS ═══ -->
+<section class="band">
+  <div class="shell">
+    <div class="section-head reveal">
+      <h2 class="t-display t-md">Three ways in.</h2>
+      <p class="t-body">Or skip these and build your own from any six products in the range.</p>
+    </div>
+
+    <div class="kits">
+
+      <div class="kit reveal">
+        <div class="kit-head">
+          <p class="t-label">Starter</p>
+          <p class="kit-price">$XX.XX <span class="flag">Placeholder</span></p>
+        </div>
+        <h3 class="t-display">Basecamp</h3>
+        <p class="kit-blurb">The two lowest-dose formats and nothing else. Built for a first time.</p>
+        <ul class="kit-list">
+          <li>Basecamp Seltzer, 5 mg &middot; 4 cans</li>
+          <li>Social Gummies, 10 mg &middot; 1 pouch</li>
+          <li>Dosing card</li>
+        </ul>
+        <p class="kit-save">Saves 15%</p>
+      </div>
+
+      <div class="kit kit-lead reveal" data-d="1">
+        <div class="kit-head">
+          <p class="t-label">Most picked</p>
+          <p class="kit-price">$XX.XX <span class="flag">Placeholder</span></p>
+        </div>
+        <h3 class="t-display">The Range</h3>
+        <p class="kit-blurb">One of everything that is drinkable, chewable and edible.</p>
+        <ul class="kit-list">
+          <li>Basecamp Seltzer, 10 mg &middot; 4 cans</li>
+          <li>Social Gummies, 10 mg &middot; 1 pouch</li>
+          <li>Baked Krispies, 25 mg &middot; 1 bag</li>
+          <li>Quick Stix, 10 mg &middot; 1 pack</li>
+        </ul>
+        <p class="kit-save">Saves 25%</p>
+      </div>
+
+      <div class="kit reveal" data-d="2">
+        <div class="kit-head">
+          <p class="t-label">Recovery</p>
+          <p class="kit-price">$XX.XX <span class="flag">Placeholder</span></p>
+        </div>
+        <h3 class="t-display">Descent</h3>
+        <p class="kit-blurb">The topical and the dog, for the people who buy those two together.</p>
+        <ul class="kit-list">
+          <li>10:1 Relief Roll-On &middot; 1 bottle</li>
+          <li>Dawg Snax, 25 mg CBD &middot; 1 pouch</li>
+        </ul>
+        <p class="kit-save">Saves 15%</p>
+      </div>
+
+    </div>
+
+    <div class="kit-cta reveal">
+      <p class="t-body" style="margin:0">Nothing here quite right? Every product is sold on its own.</p>
+      <a class="btn btn-secondary" href="/shop/">
+        Shop all <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% include "components/guarantee-strip.njk" %}
+
+</main>

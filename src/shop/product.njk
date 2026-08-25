@@ -1,0 +1,11 @@
+---
+layout: layouts/product.njk
+pagination:
+  data: products
+  size: 1
+  alias: product
+permalink: "/shop/{{ product.family }}/{{ product.slug }}/"
+eleventyComputed:
+  title: "{{ product.name }} · Sherpa"
+  description: "{{ product.tagline }}"
+---

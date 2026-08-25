@@ -1,0 +1,44 @@
+{
+  "name": "Sherpa",
+  "announce": "Free carbon-neutral shipping over $70",
+  "footerGroups": [
+    {
+      "title": "Shop",
+      "links": [
+        { "label": "THC Gummies",    "url": "/shop/gummies/" },
+        { "label": "Baked Goods",    "url": "/shop/baked-goods/" },
+        { "label": "THC Drinks",     "url": "/shop/drinks/" },
+        { "label": "Quick Stix",     "url": "/shop/quick-stix/" },
+        { "label": "Wellness",       "url": "/shop/wellness/" },
+        { "label": "CBD Pet Treats", "url": "/shop/pet-treats/" },
+        { "label": "Bundles",        "url": "/shop/bundles/" }
+      ]
+    },
+    {
+      "title": "Learn",
+      "links": [
+        { "label": "Find your dose", "url": "/#dose" },
+        { "label": "Lab results",    "url": "/learn/lab-results/" },
+        { "label": "Dosing guide",   "url": "/learn/dosing-guide/" },
+        { "label": "Journal",        "url": "/learn/journal/" },
+        { "label": "FAQ",            "url": "/learn/faq/" }
+      ]
+    },
+    {
+      "title": "Company",
+      "links": [
+        { "label": "About",     "url": "/company/about/" },
+        { "label": "Stockists", "url": "/company/stockists/" },
+        { "label": "Wholesale", "url": "/company/wholesale/" },
+        { "label": "Careers",   "url": "/company/careers/" },
+        { "label": "Contact",   "url": "/company/contact/" }
+      ]
+    }
+  ],
+  "legalLinks": [
+    { "label": "Privacy",       "url": "/legal/privacy/" },
+    { "label": "Terms",         "url": "/legal/terms/" },
+    { "label": "Shipping",      "url": "/legal/shipping/" },
+    { "label": "Accessibility", "url": "/legal/accessibility/" }
+  ]
+}

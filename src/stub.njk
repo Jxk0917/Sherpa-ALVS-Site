@@ -1,0 +1,49 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: stubs
+  size: 1
+  alias: stub
+permalink: "/{{ stub.slug }}/"
+eleventyComputed:
+  title: "{{ stub.name }} · Sherpa"
+  description: "{{ stub.blurb }}"
+---
+
+{%- set ph = {
+  eyebrow: stub.section,
+  fact: "Not built yet",
+  heading: stub.heading,
+  blurb: stub.blurb,
+  crumbs: [{ label: stub.section }, { label: stub.name }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+  <section class="band">
+    <div class="shell">
+      <div class="stub reveal">
+        <p class="notice notice-todo">
+          <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
+          This page has a real URL so the footer never points at nothing, but it has not been
+          written yet.
+        </p>
+        <p class="t-body stub-body">{{ stub.body }}</p>
+        <div class="stub-actions">
+          {%- if stub.cta.modal %}
+          <button class="btn btn-primary" type="button" data-compliance-open>
+            {{ stub.cta.label }} <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+          </button>
+          {%- else %}
+          <a class="btn btn-primary" href="{{ stub.cta.url }}">
+            {{ stub.cta.label }} <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+          </a>
+          {%- endif %}
+          <a class="btn btn-text" href="/shop/">
+            Shop all <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

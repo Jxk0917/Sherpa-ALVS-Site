@@ -1,32 +1,42 @@
-<div class="announce">Free carbon-neutral shipping over $75</div>
+<!-- ═══ ANNOUNCEMENT ═══
+     The announce bar, the nav and the page's crimson head are one field,
+     so these three stay contiguous. The link opens the compliance dialog.
+     Homepage-only exception (Jack, 2026-08-24): on "/" the compliance
+     trigger moves to the floating corner-stack widget instead (see
+     components/corner-stack.njk), so it is left out of the bar here to
+     avoid offering it twice on that one page. Every other page keeps it
+     in the bar exactly as before. -->
+<div class="announce">
+  {{ site.announce }}
+  {%- if page.url != "/" %}
+  <button class="announce-link" type="button" data-compliance-open>Texas compliance</button>
+  {%- endif %}
+</div>
 
 <!-- ═══ NAV ═══ -->
 <header class="nav" id="nav">
   <div class="shell nav-inner">
-    <a class="nav-logo" href="#" aria-label="Sherpa, home">
+    <a class="nav-logo" href="/" aria-label="Sherpa, home">
       <img class="logo-dark" src="/assets/logo-crimson.png" alt="Sherpa" width="318" height="140">
       <img class="logo-light" src="/assets/logo-white.png" alt="" aria-hidden="true" width="318" height="140">
     </a>
     <nav class="nav-links" aria-label="Products">
-      <a class="nav-link" href="#collections">Gummies</a>
-      <a class="nav-link" href="#collections">Baked Goods</a>
-      <a class="nav-link" href="#collections">Drinks</a>
-      <a class="nav-link" href="#collections">Wellness</a>
-      <a class="nav-link" href="#collections">Pet Treats</a>
-      <a class="nav-link" href="#collections">Quick Stix</a>
-      <a class="nav-link" href="#collections">Bundles</a>
+      {%- for f in families %}
+      <a class="nav-link{% if page.url.startsWith('/shop/' + f.slug) %} is-current{% endif %}"
+         href="/shop/{{ f.slug }}/"
+         {% if page.url.startsWith('/shop/' + f.slug) %}aria-current="page"{% endif %}>{{ f.nav }}</a>
+      {%- endfor %}
+      <a class="nav-link{% if page.url.startsWith('/shop/bundles') %} is-current{% endif %}"
+         href="/shop/bundles/"
+         {% if page.url.startsWith('/shop/bundles') %}aria-current="page"{% endif %}>Bundles</a>
     </nav>
     <div class="nav-actions">
-      <button class="iconbtn" type="button" aria-label="Search">
+      <a class="iconbtn" href="/shop/" aria-label="Shop all products">
         <svg width="21" height="21" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-search"/></svg>
-      </button>
-      <button class="iconbtn" type="button" aria-label="Account">
+      </a>
+      <a class="iconbtn" href="/company/contact/" aria-label="Contact">
         <svg width="21" height="21" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-user"/></svg>
-      </button>
-      <button class="iconbtn" type="button" aria-label="Bag, 2 items">
-        <svg width="21" height="21" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cart"/></svg>
-        <span class="cart-count" aria-hidden="true">2</span>
-      </button>
+      </a>
       <button class="iconbtn only-mobile" id="menu-open" type="button"
               aria-label="Open menu" aria-expanded="false" aria-controls="menu">
         <svg width="22" height="22" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-menu"/></svg>
@@ -45,16 +55,13 @@
       </button>
     </div>
     <nav aria-label="Products">
-      <a class="menu-link" href="#collections">Gummies <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
-      <a class="menu-link" href="#collections">Baked Goods <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
-      <a class="menu-link" href="#collections">Drinks <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
-      <a class="menu-link" href="#collections">Wellness <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
-      <a class="menu-link" href="#collections">Pet Treats <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
-      <a class="menu-link" href="#collections">Quick Stix <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
-      <a class="menu-link" href="#collections">Bundles <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+      {%- for f in families %}
+      <a class="menu-link" href="/shop/{{ f.slug }}/">{{ f.nav }} <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+      {%- endfor %}
+      <a class="menu-link" href="/shop/bundles/">Bundles <svg width="20" height="20" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
     </nav>
-    <a class="btn btn-primary" href="#guide" style="margin-top:2rem;width:100%">
-      Get the dosing guide <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+    <a class="btn btn-primary" href="/shop/" style="margin-top:2rem;width:100%">
+      Shop all <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
     </a>
   </div>
 </div>

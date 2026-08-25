@@ -1,0 +1,15 @@
+{
+  "name": "sherpa-alvs-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sherpa hemp/THC brand site — Eleventy static build.",
+  "type": "module",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "clean": "node -e \"import('node:fs').then(fs=>fs.rmSync('_site',{recursive:true,force:true}))\""
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  }
+}

@@ -1,0 +1,271 @@
+---
+layout: layouts/base.njk
+---
+{% from "components/product-card.njk" import card %}
+{% from "components/star-rating.njk" import stars %}
+{%- set fam = families | find("slug", product.family) -%}
+{%- set siblings = products | byFamily(product.family) -%}
+{#- The active variant on first paint. Defaults to the flagship strength
+    where one is named, not the lowest — the gummies' card photo and the
+    seltzer's hero can are both shot at their flagship dose, so opening on
+    the lowest strength would contradict the photograph beside it. -#}
+{%- set fallback = product.defaultDose or product.doses[0] -%}
+{%- set activeVariant = (product.variants | find("dose", fallback)) if product.variants else null -%}
+
+{%- set ph = {
+  eyebrow: fam.name,
+  fact: product.doses.length and (product.doses | doseList) or product.flavors[0],
+  heading: product.name,
+  blurb: product.tagline,
+  crumbs: [
+    { label: "Shop", url: "/shop/" },
+    { label: fam.nav, url: "/shop/" + fam.slug + "/" },
+    { label: product.name }
+  ]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+<!-- ═══ THE PRODUCT ═══
+     Photo left, the panel you buy from right. The photo sits on the
+     shot ground rather than on crimson because every pack shot was
+     recoloured to that exact ivory; on any other fill it reads as a
+     pasted rectangle. -->
+<section class="band pdp">
+  <div class="shell pdp-grid">
+
+    <!-- A plain photo alone reads too light next to a panel carrying a
+         price, picker, buy button and ingredients — so the onset/duration
+         spec grid and the notes bullets now sit under the photo instead
+         of stacked at the bottom of the buy panel, balancing the two
+         columns. -->
+    <div class="pdp-left reveal">
+      <div class="pdp-media">
+        {%- if product.variants %}
+        <img id="pdp-image" src="{{ activeVariant.front }}" alt="{{ activeVariant.frontAlt }}" width="900" height="900">
+        <!-- Front/back toggle: every variant carries its own real label
+             photo, so the nutrition facts and ingredients are the actual
+             printed panel rather than a second copy transcribed into HTML
+             (and possibly mis-copied off a small pack shot). -->
+        <div class="viewtabs" role="tablist" aria-label="Package view">
+          <button class="viewtab" type="button" role="tab" aria-selected="true" data-view="front">Front</button>
+          <button class="viewtab" type="button" role="tab" aria-selected="false" data-view="back">Label &amp; ingredients</button>
+        </div>
+        <script type="application/json" id="variant-data">{{ product.variants | json | safe }}</script>
+        {%- elif product.hero or product.image %}
+        <img src="{{ product.hero or product.image }}"
+             alt="{{ product.heroAlt or product.imageAlt }}" width="900" height="900">
+        {%- else %}
+        <div class="pdp-topo" aria-hidden="true"><svg viewBox="0 0 1200 900"><use href="#c-pass"/></svg></div>
+        <p class="pdp-noart">No product photography has been supplied for {{ product.name }} yet.</p>
+        {%- endif %}
+      </div>
+
+      <!-- Onset and duration are the two numbers the dose instrument
+           teaches, so a product page states them in the same order. -->
+      <div class="pdp-specs" {% if product.variants %}data-count="6"{% endif %}>
+        <div class="pdp-spec">
+          <p class="t-value">{{ product.onset.value }}<span class="t-unit">{{ product.onset.unit }}</span></p>
+          <p class="t-label">Onset</p>
+        </div>
+        <div class="pdp-spec">
+          <p class="t-value">{{ product.duration.value }}<span class="t-unit">{{ product.duration.unit }}</span></p>
+          <p class="t-label">Duration</p>
+        </div>
+        {%- if product.variants %}
+        <div class="pdp-spec">
+          <p class="t-value"><span id="pdp-spec-dose">{{ activeVariant.dose }}</span><span class="t-unit">mg</span></p>
+          <p class="t-label">Per piece</p>
+        </div>
+        <div class="pdp-spec">
+          <p class="t-value"><span id="pdp-spec-total">{{ activeVariant.totalMg }}</span><span class="t-unit">mg</span></p>
+          <p class="t-label">Total per pouch</p>
+        </div>
+        <div class="pdp-spec">
+          <p class="t-value"><span id="pdp-spec-count">{{ activeVariant.count }}</span><span class="t-unit">ct</span></p>
+          <p class="t-label">Pieces per pouch</p>
+        </div>
+        <div class="pdp-spec">
+          <p class="t-value"><span id="pdp-spec-cal">{{ activeVariant.calories }}</span></p>
+          <p class="t-label">Calories per piece</p>
+        </div>
+        {%- else %}
+        {%- for s in product.specs %}
+        <div class="pdp-spec">
+          <p class="t-value">{{ s.value }}<span class="t-unit">{{ s.unit }}</span></p>
+          <p class="t-label">{{ s.label }}</p>
+        </div>
+        {%- endfor %}
+        {%- endif %}
+      </div>
+
+      {%- if product.notes.length %}
+      <ul class="pdp-notes">
+        {%- for n in product.notes %}
+        <li>{{ n }}</li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+
+    <div class="pdp-panel reveal" data-d="1">
+
+      {%- if product.status == 'placeholder' %}
+      <p class="notice notice-todo">
+        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
+        Placeholder page. Only the format and the strengths below are confirmed.
+      </p>
+      {%- endif %}
+
+      <div class="pdp-price">
+        {%- if product.variants %}
+        <span class="t-value" id="pdp-price">{{ activeVariant.price | price }}</span>
+        {%- else %}
+        <span class="t-value">{{ product.price | price }}</span>
+        {%- if product.price == null %}<span class="flag">Placeholder price</span>{% endif %}
+        {%- endif %}
+        {%- if product.priceNote %}<span class="pdp-pricenote">{{ product.priceNote }}</span>{% endif %}
+      </div>
+
+      {%- if product.reviews %}
+      <div class="pdp-rating">
+        {{ stars(product.reviews.rating) }}
+        <span class="pdp-rating-text">{{ product.reviews.rating }} <span class="pdp-rating-count">({{ product.reviews.count }} review{{ "s" if product.reviews.count != 1 }})</span></span>
+      </div>
+      {%- endif %}
+
+      <p class="t-body pdp-desc">{{ product.description }}</p>
+
+      {%- if product.doses.length %}
+      <div class="picker" data-picker="dose">
+        <p class="t-label picker-label">Strength <span class="picker-unit">{{ product.doseUnit }}</span></p>
+        <div class="picker-opts" role="radiogroup" aria-label="Strength in milligrams">
+          {%- for d in product.doses %}
+          <button class="picker-opt" type="button" role="radio"
+                  aria-checked="{{ 'true' if d == fallback else 'false' }}"
+                  tabindex="{{ '0' if d == fallback else '-1' }}"
+                  {% if product.variants %}data-dose="{{ d }}"{% endif %}
+                  data-value="{{ d }} mg">{{ d }}<span class="picker-u">mg</span></button>
+          {%- endfor %}
+        </div>
+      </div>
+      {%- endif %}
+
+      {%- if product.flavors.length > 1 %}
+      <div class="picker" data-picker="flavor">
+        <p class="t-label picker-label">Flavour</p>
+        <div class="picker-opts" role="radiogroup" aria-label="Flavour">
+          {#- Only watermelon has been photographed, so that is what the
+              flavour picker opens on wherever the hero shot is a can. -#}
+          {%- set flav = product.defaultFlavor or product.flavors[0] -%}
+          {%- for f in product.flavors %}
+          <button class="picker-opt picker-opt-wide" type="button" role="radio"
+                  aria-checked="{{ 'true' if f == flav else 'false' }}"
+                  tabindex="{{ '0' if f == flav else '-1' }}"
+                  data-value="{{ f }}">{{ f }}</button>
+          {%- endfor %}
+        </div>
+      </div>
+      {%- elif product.flavors.length == 1 %}
+      <div class="picker">
+        <p class="t-label picker-label">Flavour</p>
+        <p class="picker-single">{{ product.flavors[0] }}</p>
+      </div>
+      {%- endif %}
+
+      <div class="pdp-buy">
+        <button class="btn btn-primary" type="button" data-buy>
+          Add to bag <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+        </button>
+        <p class="pdp-selected" aria-live="polite" data-selection></p>
+      </div>
+      <p class="pdp-buynote">Checkout is not connected yet. The catalog is built so a cart can be added without rebuilding these pages.</p>
+
+      {%- if product.family == 'gummies' %}
+      {% include "components/pdp-trust.njk" %}
+      {%- endif %}
+
+      {%- if product.ingredients.length %}
+      <div class="pdp-ingredients">
+        <p class="t-label picker-label">Ingredients</p>
+        <p class="ingredient-list">{{ product.ingredients | join(", ") }}.</p>
+      </div>
+      {%- endif %}
+
+    </div>
+  </div>
+</section>
+
+{% include "components/guarantee-strip.njk" %}
+
+<!-- ═══ CERTIFICATE ═══ -->
+<section class="proof band" id="coa">
+  <div class="shell">
+    <div class="proof-grid">
+      <div>
+        <p class="t-label tag tag-lit reveal">Lab results<span class="tag-fact">Every batch</span></p>
+        <h2 class="t-display t-lg reveal" data-d="1">We publish<br>the receipts.</h2>
+        <p class="t-body reveal" data-d="2" style="margin-top:1.35rem">
+          Every batch goes to an ISO-accredited lab before it ships. You read the same certificate
+          we do. It's printed on the box as a QR code and posted here.
+        </p>
+        <a class="btn btn-on-dark reveal" data-d="2" href="/learn/lab-results/" style="margin-top:2.25rem">
+          All lab results <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+
+      <div class="coa reveal" data-d="1">
+        {%- if product.coa %}
+        <div class="coa-head">
+          <p class="t-label">Certificate of analysis</p>
+          <p class="t-label">{{ product.coa.tested }}</p>
+        </div>
+        <p class="coa-batch">Batch {{ product.coa.batch }} &middot; {{ product.name }}</p>
+        <dl class="coa-rows">
+          <div class="coa-row"><dt>Label claim</dt><dd>{{ product.coa.claim }}</dd></div>
+          <div class="coa-row"><dt>Found</dt><dd>{{ product.coa.found }}</dd></div>
+        </dl>
+        <div class="coa-safety">
+          <span class="t-label">Screened and cleared</span>
+          <div class="chips">
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Pesticides</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Heavy metals</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Solvents</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Microbials</span>
+          </div>
+        </div>
+        {%- else %}
+        <div class="coa-head">
+          <p class="t-label">Certificate of analysis</p>
+          <p class="t-label">Pending</p>
+        </div>
+        <p class="coa-batch">{{ product.name }}</p>
+        <p class="coa-empty">
+          No certificate has been supplied for this product yet. Every Sherpa batch is third party
+          tested before it ships, so this panel fills in from <code>products.json</code> as soon as
+          the COA exists.
+        </p>
+        {%- endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- if siblings.length > 1 %}
+<!-- ═══ THE REST OF THE FAMILY ═══ -->
+<section class="band">
+  <div class="shell">
+    <div class="section-head reveal">
+      <h2 class="t-display t-md">More {{ fam.name | lower }}.</h2>
+    </div>
+    <div class="pgrid pgrid-rail" data-count="{{ siblings.length - 1 }}">
+      {%- for p in siblings %}
+        {%- if p.slug != product.slug %}{{ card(p, families, loop.index0) }}{% endif %}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+</main>

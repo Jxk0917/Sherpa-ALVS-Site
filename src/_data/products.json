@@ -1,0 +1,301 @@
+[
+  {
+    "slug": "social-gummies",
+    "family": "gummies",
+    "name": "Social Gummies",
+    "tagline": "Real fruit purée, no cannabis aftertaste.",
+    "status": "real",
+    "price": 21,
+    "doseUnit": "per piece",
+    "doses": [10, 25, 100],
+    "flavors": ["Strawberry Bellini"],
+    "onset": { "value": "30", "unit": "min" },
+    "duration": { "value": "3", "unit": "hrs" },
+    "image": "/assets/product-gummies-10-front.png",
+    "imageAlt": "Sherpa Social Gummies pouch, Strawberry Bellini flavour, 10 mg",
+    "description": "Strawberry Bellini Social Gummies are built for the moments that call for good company: meeting friends, easing into a party, or just adding a little spark to your day. Each gummy pairs nano-emulsified THC with terpinolene and pinene. Terpinolene brings an uplifting, energizing lift, and pinene sharpens focus and alertness, together supporting the easy, engaged feeling that keeps conversation flowing.",
+    "notes": [
+      "Give it 45 minutes before deciding you need a second one.",
+      "Made in San Antonio, Texas from sustainably sourced hemp.",
+      "Third-party lab tested, every batch."
+    ],
+    "ingredients": ["Corn Syrup", "Natural Cane Sugar", "Water", "Pectin", "Natural Flavors", "Citric Acid", "Sodium Citrate", "Nano-Emulsified THC", "Organic MCT Coconut Oil", "Terpinolene", "Pinene"],
+    "reviews": { "rating": 4.5, "count": 4 },
+    "variants": [
+      {
+        "dose": 10, "price": 21, "count": 10, "totalMg": 100, "calories": 10,
+        "front": "/assets/product-gummies-10-front.png",
+        "back": "/assets/product-gummies-10-back.png",
+        "frontAlt": "Sherpa Social Gummies pouch, Strawberry Bellini, 10 mg per piece",
+        "backAlt": "Nutrition facts and ingredients, Sherpa Social Gummies 10 mg"
+      },
+      {
+        "dose": 25, "price": 25, "count": 10, "totalMg": 250, "calories": 38,
+        "front": "/assets/product-gummies-25-front.png",
+        "back": "/assets/product-gummies-25-back.png",
+        "frontAlt": "Sherpa Social Gummies pouch, Strawberry Bellini, 25 mg per piece",
+        "backAlt": "Nutrition facts and ingredients, Sherpa Social Gummies 25 mg"
+      },
+      {
+        "dose": 100, "price": 27, "count": 3, "totalMg": 300, "calories": 110,
+        "front": "/assets/product-gummies-100-front.png",
+        "back": "/assets/product-gummies-100-back.png",
+        "frontAlt": "Sherpa Social Gummies pouch, Strawberry Bellini, 100 mg per piece, very potent",
+        "backAlt": "Nutrition facts and ingredients, Sherpa Social Gummies 100 mg"
+      }
+    ],
+    "coa": { "batch": "24-C", "tested": "2026-07-02", "claim": "10.00 mg", "found": "10.12 mg / piece" }
+  },
+
+  {
+    "slug": "sleep-gummies",
+    "family": "gummies",
+    "name": "Sleep Gummies",
+    "tagline": "Myrcene and linalool, blended to help you actually stay asleep.",
+    "status": "real",
+    "price": 21,
+    "doseUnit": "per piece",
+    "doses": [10, 25, 100],
+    "flavors": ["Blackberry Lemonade"],
+    "onset": { "value": "45", "unit": "min" },
+    "duration": { "value": "6-8", "unit": "hrs" },
+    "image": "/assets/product-sleep-gummies-10-front.png",
+    "imageAlt": "Sherpa Sleep Gummies pouch, Blackberry Lemonade flavour, 10 mg",
+    "description": "Blackberry Lemonade Sleep Gummies are built to help you unwind, not stay up. Each gummy pairs nano-emulsified THC with myrcene and linalool, two terpenes associated with deep relaxation, easing tension and quieting the mind so sleep holds through the night rather than just the first hour.",
+    "notes": [
+      "Best taken 30 to 60 minutes before bed.",
+      "Made in San Antonio, Texas from sustainably sourced hemp.",
+      "Uses pectin, not gelatin — no animal products.",
+      "Third-party lab tested, every batch."
+    ],
+    "ingredients": ["Corn Syrup", "Natural Cane Sugar", "Water", "Pectin", "Natural Flavors", "Citric Acid", "Sodium Citrate", "Nano-Emulsified THC", "Organic MCT Coconut Oil", "Myrcene", "Linalool"],
+    "reviews": { "rating": 4.5, "count": 11 },
+    "variants": [
+      {
+        "dose": 10, "price": 21, "count": 10, "totalMg": 100, "calories": 10,
+        "front": "/assets/product-sleep-gummies-10-front.png",
+        "back": "/assets/product-sleep-gummies-10-back.png",
+        "frontAlt": "Sherpa Sleep Gummies pouch, Blackberry Lemonade, 10 mg per piece",
+        "backAlt": "Nutrition facts and ingredients, Sherpa Sleep Gummies 10 mg"
+      },
+      {
+        "dose": 25, "price": 25, "count": 10, "totalMg": 250, "calories": 38,
+        "front": "/assets/product-sleep-gummies-25-front.png",
+        "back": "/assets/product-sleep-gummies-25-back.png",
+        "frontAlt": "Sherpa Sleep Gummies pouch, Blackberry Lemonade, 25 mg per piece",
+        "backAlt": "Nutrition facts and ingredients, Sherpa Sleep Gummies 25 mg"
+      },
+      {
+        "dose": 100, "price": 27, "count": 3, "totalMg": 300, "calories": 110,
+        "front": "/assets/product-sleep-gummies-100-front.png",
+        "back": "/assets/product-sleep-gummies-100-back.png",
+        "frontAlt": "Sherpa Sleep Gummies pouch, Blackberry Lemonade, 100 mg per piece, very potent",
+        "backAlt": "Nutrition facts and ingredients, Sherpa Sleep Gummies 100 mg"
+      }
+    ],
+    "coa": null
+  },
+
+  {
+    "slug": "basecamp-seltzer",
+    "family": "drinks",
+    "name": "Basecamp Seltzer",
+    "tagline": "About 15 minutes, not the 45 to 90 you would wait on a gummy.",
+    "status": "real",
+    "price": 24,
+    "priceNote": "Four-pack",
+    "doseUnit": "per can",
+    "doses": [5, 10, 25, 50, 100],
+    "defaultDose": 10,
+    "flavors": ["Blood Orange", "Classic Lemonade", "Passionfruit Mango", "Watermelon"],
+    "defaultFlavor": "Watermelon",
+    "onset": { "value": "15", "unit": "min" },
+    "duration": { "value": "2-3", "unit": "hrs" },
+    "specs": [
+      { "value": "0", "unit": "g", "label": "Sugar" },
+      { "value": "355", "unit": "ml", "label": "Volume" }
+    ],
+    "image": "/assets/product-drinks.png",
+    "imageAlt": "Sherpa THC Seltzer cans, four flavours in a row",
+    "hero": "/assets/product-seltzer-wm.png",
+    "heroAlt": "A single Sherpa Basecamp Seltzer can, 10 mg THC",
+    "description": "Nano-emulsified so the THC disperses in water rather than sitting in oil, which is what makes the onset fast and, more usefully, predictable. Sparkling water, natural flavour, THC. Nothing else.",
+    "notes": [
+      "The flagship can is 10 mg. The same seltzer is made from 5 mg up to 100 mg.",
+      "Crafted in San Antonio, TX."
+    ],
+    "coa": { "batch": "24-A", "tested": "2026-07-14", "claim": "10.00 mg", "found": "10.06 mg / can" }
+  },
+
+  {
+    "slug": "spirits",
+    "family": "drinks",
+    "name": "Spirits",
+    "tagline": "[PLACEHOLDER] A 750 ml non-alcoholic bottle.",
+    "status": "placeholder",
+    "price": null,
+    "doseUnit": "per serving",
+    "doses": [5, 10],
+    "flavors": ["[PLACEHOLDER] Flavour one", "[PLACEHOLDER] Flavour two"],
+    "onset": { "value": "XX", "unit": "min" },
+    "duration": { "value": "X", "unit": "hrs" },
+    "specs": [
+      { "value": "750", "unit": "ml", "label": "Volume" },
+      { "value": "XX", "unit": "ct", "label": "Servings" }
+    ],
+    "image": null,
+    "imageAlt": "",
+    "description": "[PLACEHOLDER] Spirits is a 750 ml non-alcoholic bottle at 5 or 10 mg. No photography, flavour list, serving size or tasting copy has been supplied for this product yet. Everything on this page other than the format and the two strengths is a stand-in.",
+    "notes": [
+      "[PLACEHOLDER] Whether 5 mg and 10 mg are two bottle strengths or two serving sizes has not been confirmed."
+    ],
+    "coa": null
+  },
+
+  {
+    "slug": "krispies",
+    "family": "baked-goods",
+    "name": "Baked Krispies",
+    "tagline": "Scored into five even portions.",
+    "status": "real",
+    "price": null,
+    "doseUnit": "per bag",
+    "doses": [25],
+    "flavors": ["Fruity Rainbow"],
+    "onset": { "value": "45", "unit": "min" },
+    "duration": { "value": "5", "unit": "hrs" },
+    "specs": [
+      { "value": "5", "unit": "mg", "label": "Per serving" },
+      { "value": "5", "unit": "ct", "label": "Servings" }
+    ],
+    "image": "/assets/product-krispies.png",
+    "imageAlt": "Sherpa Baked Krispies pouch, Fruity Rainbow flavour",
+    "description": "A 25 mg bag divided into five 5 mg servings, which is the reason it is the easiest thing in the range to take a small dose of. The scoring is real, not decorative.",
+    "notes": [
+      "One serving is 5 mg, not one bag.",
+      "Sits in the Baked Goods family alongside Taffy and Caramel Bites."
+    ],
+    "coa": { "batch": "24-B", "tested": "2026-06-28", "claim": "25.00 mg", "found": "24.81 mg / bag" }
+  },
+
+  {
+    "slug": "taffy",
+    "family": "baked-goods",
+    "name": "Taffy",
+    "tagline": "[PLACEHOLDER] Tagline to be supplied.",
+    "status": "placeholder",
+    "price": null,
+    "doseUnit": "per piece",
+    "doses": [15],
+    "flavors": ["[PLACEHOLDER] Flavour to be supplied"],
+    "onset": { "value": "XX", "unit": "min" },
+    "duration": { "value": "X", "unit": "hrs" },
+    "specs": [
+      { "value": "XX", "unit": "ct", "label": "Per pack" }
+    ],
+    "image": null,
+    "imageAlt": "",
+    "description": "[PLACEHOLDER] Taffy is a 15 mg Baked Goods product. The strength is confirmed. Photography, flavours, pack count, onset, duration and description have not been supplied yet.",
+    "notes": [],
+    "coa": null
+  },
+
+  {
+    "slug": "caramel-bites",
+    "family": "baked-goods",
+    "name": "Caramel Bites",
+    "tagline": "[PLACEHOLDER] Tagline to be supplied.",
+    "status": "placeholder",
+    "price": null,
+    "doseUnit": "per piece",
+    "doses": [20],
+    "flavors": ["[PLACEHOLDER] Flavour to be supplied"],
+    "onset": { "value": "XX", "unit": "min" },
+    "duration": { "value": "X", "unit": "hrs" },
+    "specs": [
+      { "value": "XX", "unit": "ct", "label": "Per pack" }
+    ],
+    "image": null,
+    "imageAlt": "",
+    "description": "[PLACEHOLDER] Caramel Bites is a 20 mg Baked Goods product. The strength is confirmed. Photography, flavours, pack count, onset, duration and description have not been supplied yet.",
+    "notes": [],
+    "coa": null
+  },
+
+  {
+    "slug": "drink-mix",
+    "family": "quick-stix",
+    "name": "Quick Stix",
+    "tagline": "Six sticks a pack, for wherever a can does not work.",
+    "status": "real",
+    "price": null,
+    "doseUnit": "per stick",
+    "doses": [10, 25],
+    "flavors": ["Pure Unflavored"],
+    "onset": { "value": "15", "unit": "min" },
+    "duration": { "value": "3", "unit": "hrs" },
+    "specs": [
+      { "value": "6", "unit": "ct", "label": "Per pack" },
+      { "value": "0", "unit": "g", "label": "Sugar" }
+    ],
+    "image": "/assets/product-stix.png",
+    "imageAlt": "Sherpa Quick Stix drink mix pouches, 10 mg and 25 mg, Pure Unflavored",
+    "description": "A fast-acting drink mix in single-serve sticks. Unflavoured on purpose, so it goes into whatever you are already drinking without turning it into something else.",
+    "notes": [
+      "[PLACEHOLDER] How it is taken, and what volume of liquid each stick is meant for, has not been specified."
+    ],
+    "coa": { "batch": "24-D", "tested": "2026-07-09", "claim": "10.00 mg", "found": "9.94 mg / stick" }
+  },
+
+  {
+    "slug": "relief-roll-on",
+    "family": "wellness",
+    "name": "10:1 Relief Roll-On",
+    "tagline": "Topical, mint scented, built for recovery.",
+    "status": "real",
+    "price": null,
+    "doseUnit": "per bottle",
+    "doses": [],
+    "flavors": ["Mint Scented"],
+    "onset": { "value": "N/A", "unit": "" },
+    "duration": { "value": "N/A", "unit": "" },
+    "specs": [
+      { "value": "2000", "unit": "mg", "label": "CBD" },
+      { "value": "200", "unit": "mg", "label": "THC" }
+    ],
+    "image": "/assets/product-wellness.png",
+    "imageAlt": "Sherpa 10:1 Relief Roll-On, mint scented, with box",
+    "description": "Ten parts CBD to one part THC, applied where it hurts rather than taken. Because it is topical, onset and duration do not work the way they do for everything else in the range.",
+    "notes": [
+      "This is the one Sherpa product the dose instrument does not describe.",
+      "All natural, paraben free."
+    ],
+    "coa": { "batch": "24-W", "tested": "2026-06-19", "claim": "2000 mg CBD", "found": "2014 mg / bottle" }
+  },
+
+  {
+    "slug": "dawg-snax",
+    "family": "pet-treats",
+    "name": "Dawg Snax",
+    "tagline": "THC-free chews, sized by body weight.",
+    "status": "real",
+    "price": null,
+    "doseUnit": "per chew",
+    "doses": [],
+    "flavors": ["Bacon Buffet"],
+    "onset": { "value": "N/A", "unit": "" },
+    "duration": { "value": "N/A", "unit": "" },
+    "specs": [
+      { "value": "25", "unit": "mg", "label": "CBD" },
+      { "value": "0", "unit": "mg", "label": "THC" }
+    ],
+    "image": "/assets/product-pet.png",
+    "imageAlt": "Sherpa Dawg Snax pouch, Bacon Buffet flavour",
+    "description": "Vet-formulated CBD chews with no THC in them at all, so there is nothing here that can make a dog high. Dosed by body weight rather than by piece.",
+    "notes": [
+      "THC-free. This is the only product in the range that is.",
+      "[PLACEHOLDER] The weight-to-dose chart has not been supplied."
+    ],
+    "coa": { "batch": "24-P", "tested": "2026-06-11", "claim": "25.00 mg CBD", "found": "25.3 mg / chew" }
+  }
+]

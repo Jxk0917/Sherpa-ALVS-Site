@@ -1,0 +1,113 @@
+---
+layout: layouts/base.njk
+title: "Lab results · Sherpa"
+description: "Every Sherpa batch is third party tested before it ships. The certificates are published here."
+permalink: "/learn/lab-results/"
+---
+
+{%- set ph = {
+  eyebrow: "Lab results",
+  fact: "Every batch",
+  heading: "We publish<br>the receipts.",
+  blurb: "Every batch goes to an ISO-accredited lab before it ships. You read the same certificate we do.",
+  crumbs: [{ label: "Learn" }, { label: "Lab results" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+<!-- ═══ HOW TO READ ONE ═══ -->
+<section class="band">
+  <div class="shell">
+    <div class="section-head reveal">
+      <h2 class="t-display t-md">What a certificate<br>actually tells you.</h2>
+      <p class="t-body">
+        Two things matter on a COA and most brands bury both. The first is whether the potency
+        found matches the potency claimed. The second is whether the safety screens passed.
+      </p>
+    </div>
+
+    <div class="readcoa">
+      <div class="readcoa-item reveal">
+        <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-flask"/></svg>
+        <div>
+          <h3>Claim against found</h3>
+          <p>A 10 mg can should test near 10 mg. Ours run within 5%. A brand that will not print the found number is telling you something.</p>
+        </div>
+      </div>
+      <div class="readcoa-item reveal" data-d="1">
+        <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>
+        <div>
+          <h3>Four safety screens</h3>
+          <p>Pesticides, heavy metals, residual solvents, microbials. All four have to pass, on every batch, not on a representative sample.</p>
+        </div>
+      </div>
+      <div class="readcoa-item reveal" data-d="2">
+        <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-pack"/></svg>
+        <div>
+          <h3>Batch and date</h3>
+          <p>A certificate with no batch number cannot be matched to the thing in your hand. Ours is printed on the box as a QR code.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE CERTIFICATES ═══ -->
+<section class="proof band-lg">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="t-label tag tag-lit">Current batches<span class="tag-fact">{{ products.length }} products</span></p>
+      <h2 class="t-display t-lg">Every batch<br>on the shelf.</h2>
+    </div>
+
+    <p class="notice notice-todo notice-dark reveal">
+      <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
+      Certificate PDFs are not linked yet. Batch numbers, dates and results below come from
+      <code>products.json</code>, so uploading the real documents is a data edit.
+    </p>
+
+    <div class="coa-grid">
+      {%- for p in products %}
+      <div class="coa reveal" data-d="{{ loop.index0 % 3 }}">
+        {%- if p.coa %}
+        <div class="coa-head">
+          <p class="t-label">Batch {{ p.coa.batch }}</p>
+          <p class="t-label">{{ p.coa.tested }}</p>
+        </div>
+        <p class="coa-batch">{{ p.name }}</p>
+        <dl class="coa-rows">
+          <div class="coa-row"><dt>Label claim</dt><dd>{{ p.coa.claim }}</dd></div>
+          <div class="coa-row"><dt>Found</dt><dd>{{ p.coa.found }}</dd></div>
+        </dl>
+        <div class="coa-safety">
+          <span class="t-label">Screened and cleared</span>
+          <div class="chips">
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Pesticides</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Heavy metals</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Solvents</span>
+            <span class="chip"><svg width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg>Microbials</span>
+          </div>
+        </div>
+        {%- else %}
+        <div class="coa-head">
+          <p class="t-label">Pending</p>
+          <p class="t-label">&mdash;</p>
+        </div>
+        <p class="coa-batch">{{ p.name }}</p>
+        <p class="coa-empty">No certificate supplied yet. This product is a placeholder in the catalog.</p>
+        {%- endif %}
+        <div class="coa-foot">
+          <a class="btn btn-text" href="/shop/{{ p.family }}/{{ p.slug }}/">
+            {{ p.name }} <svg width="16" height="16" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "components/guarantee-strip.njk" %}
+
+</main>

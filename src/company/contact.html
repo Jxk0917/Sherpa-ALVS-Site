@@ -1,0 +1,100 @@
+---
+layout: layouts/base.njk
+title: "Contact · Sherpa"
+description: "Questions about dosing, an order, or wholesale. Write to Sherpa in San Antonio, Texas."
+permalink: "/company/contact/"
+---
+
+{%- set ph = {
+  eyebrow: "Contact",
+  fact: "San Antonio, TX",
+  heading: "Talk to<br>a person.",
+  blurb: "Dosing questions, order problems, or wholesale. All three reach the same small team.",
+  crumbs: [{ label: "Company" }, { label: "Contact" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+<section class="band">
+  <div class="shell contact-grid">
+
+    <div class="reveal">
+      <h2 class="t-display t-md">Where to reach us.</h2>
+
+      <p class="notice notice-todo" style="margin-top:1.5rem">
+        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
+        Phone number, support inbox and hours are placeholders. The web address and Instagram
+        handle below are the real ones from the compliance disclosure.
+      </p>
+
+      <div class="contact-rows">
+        <div class="contact-row">
+          <p class="t-label">Online</p>
+          <p><a href="https://exploresherpa.com">exploresherpa.com</a></p>
+        </div>
+        <div class="contact-row">
+          <p class="t-label">Instagram</p>
+          <p><a href="https://instagram.com/exploresherpa">@exploresherpa</a></p>
+        </div>
+        <div class="contact-row">
+          <p class="t-label">Support</p>
+          <p>[PLACEHOLDER] support@ address to be supplied</p>
+        </div>
+        <div class="contact-row">
+          <p class="t-label">Phone</p>
+          <p>[PLACEHOLDER] The homepage promises "a real number to call". It needs to go here.</p>
+        </div>
+        <div class="contact-row">
+          <p class="t-label">Wholesale</p>
+          <p>[PLACEHOLDER] Wholesale enquiries route to be supplied</p>
+        </div>
+        <div class="contact-row">
+          <p class="t-label">Where we are</p>
+          <p>San Antonio, Texas</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- The form posts nowhere yet. It validates client-side and says so,
+         rather than pretending to send and silently dropping the message. -->
+    <div class="contact-card reveal" data-d="1">
+      <h3 class="t-display">Send a message.</h3>
+      <form class="cform" id="contact-form" novalidate>
+        <div class="cfield">
+          <label class="t-label" for="c-name">Your name</label>
+          <input id="c-name" name="name" type="text" autocomplete="name" required>
+          <p class="cfield-error" data-error-for="c-name" role="alert" hidden></p>
+        </div>
+        <div class="cfield">
+          <label class="t-label" for="c-email">Email address</label>
+          <input id="c-email" name="email" type="email" autocomplete="email" required>
+          <p class="cfield-error" data-error-for="c-email" role="alert" hidden></p>
+        </div>
+        <div class="cfield">
+          <label class="t-label" for="c-topic">What is it about</label>
+          <select id="c-topic" name="topic">
+            <option>An order</option>
+            <option>Dosing</option>
+            <option>Wholesale</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="cfield">
+          <label class="t-label" for="c-msg">Message</label>
+          <textarea id="c-msg" name="message" rows="5" required></textarea>
+          <p class="cfield-error" data-error-for="c-msg" role="alert" hidden></p>
+        </div>
+        <button class="btn btn-primary" type="submit">
+          Send message <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+        </button>
+        <p class="cform-note">21+ only. We reply within one business day.</p>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+{% include "components/guarantee-strip.njk" %}
+
+</main>

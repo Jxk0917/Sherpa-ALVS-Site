@@ -1,0 +1,67 @@
+---
+layout: layouts/base.njk
+---
+{% from "components/product-card.njk" import card %}
+{%- set items = products | byFamily(family.slug) -%}
+
+{%- set ph = {
+  eyebrow: "The range",
+  fact: items.length + (" product" if items.length == 1 else " products"),
+  heading: family.name,
+  blurb: family.intro,
+  crumbs: [
+    { label: "Shop", url: "/shop/" },
+    { label: family.nav }
+  ]
+} -%}
+{#- A family leads with its packaging if its record carries a `hero`
+    object, and with the standard page head otherwise. Only Gummies has
+    one; the other five render exactly as they did before. -#}
+{% if family.hero %}
+  {% include "components/family-hero.njk" %}
+{% else %}
+  {% include "components/pagehead.njk" %}
+{% endif %}
+
+<main id="main">
+
+<section class="band">
+  <div class="shell">
+    <div class="pgrid" data-count="{{ items.length }}">
+      {%- for p in items %}{{ card(p, families, loop.index0) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "components/guarantee-strip.njk" %}
+
+<!-- ═══ CROSS-SELL ═══ -->
+<section class="band">
+  <div class="shell">
+    <div class="section-head reveal">
+      <h2 class="t-display t-md">Every format.<br>One standard.</h2>
+      <p class="t-body">
+        Every family is dosed, tested and labelled the same way, so moving between them never
+        means starting over.
+      </p>
+    </div>
+    <div class="famstrip">
+      {%- for f in families %}
+        {%- if f.slug != family.slug %}
+        <a class="famchip reveal" data-d="{{ loop.index0 }}" href="/shop/{{ f.slug }}/">
+          <svg width="19" height="19" aria-hidden="true" viewBox="0 0 24 24"><use href="#{{ f.icon }}"/></svg>
+          <span>{{ f.name }}</span>
+          <svg width="16" height="16" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+        </a>
+        {%- endif %}
+      {%- endfor %}
+      <a class="famchip reveal" href="/shop/bundles/">
+        <svg width="19" height="19" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-mountain"/></svg>
+        <span>Bundles</span>
+        <svg width="16" height="16" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>

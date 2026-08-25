@@ -1,0 +1,92 @@
+{# ═══ FAMILY HERO ═══════════════════════════════════════════════════
+   The product-led alternative to pagehead.njk, for a family whose
+   packaging is strong enough to lead with. Opt-in: a family only gets
+   this if its record in families.json carries a `hero` object, exactly
+   the way a product opts into a background photo with `heroBackground`.
+   Every family without one renders pagehead.njk unchanged.
+
+   Same contract as pagehead.njk in the one way that matters: the nav
+   carries margin-bottom:-72px and overlays whatever sits under it, so
+   this has to be a crimson field of its own, and .fhero-grid has to open
+   with 72px of padding or the nav lands on the headline.
+
+   Expects `family.hero`: { heading, rail[], deck, note, actions[], packs[] }
+   plus the same `ph.crumbs` the page head uses. ═══════════════════ #}
+<section class="fhero">
+  <div class="fhero-topo" aria-hidden="true"><svg viewBox="0 0 1200 900"><use href="#c-ridge"/></svg></div>
+  <div class="shell fhero-grid">
+
+    <div class="fhero-copy">
+      {%- if ph.crumbs %}
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          {%- for c in ph.crumbs %}
+          <li>
+            {%- if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>
+            {%- else %}<span aria-current="page">{{ c.label }}</span>{% endif %}
+          </li>
+          {%- endfor %}
+        </ol>
+      </nav>
+      {%- endif %}
+
+      <h1 class="t-display fhero-h1 enter">{{ family.hero.heading | safe }}</h1>
+
+      {#- The rail is the reference's own device: the range stated as a
+          measured list rather than described in a sentence. Set in the
+          display face, which is the one place on the site it does a job
+          other than a headline — it is what makes the line read as
+          stamped on the pack rather than as a caption under it. #}
+      {%- if family.hero.rail %}
+      <p class="fhero-rail enter" data-d="1">
+        {%- for r in family.hero.rail %}<span>{{ r }}</span>{% endfor -%}
+      </p>
+      {%- endif %}
+
+      {%- if family.hero.deck %}
+      <p class="fhero-deck enter" data-d="1">{{ family.hero.deck }}</p>
+      {%- endif %}
+
+      {%- if family.hero.actions %}
+      <div class="fhero-actions enter" data-d="2">
+        {%- for a in family.hero.actions %}
+        <a class="btn {{ a.style }}" href="{{ a.url }}">{{ a.label }}</a>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+
+      {%- if family.hero.note %}
+      <p class="fhero-note enter" data-d="3">{{ family.hero.note }}</p>
+      {%- endif %}
+    </div>
+
+    {#- The packs are real photography, cut out by gen-gummies-shots.mjs.
+        Staggered rather than side by side, for the same reason the
+        homepage hero staggers its cans: two objects at one depth read as
+        a product grid, and the point here is a group portrait. #}
+    <div class="fhero-packs">
+      <span class="pack-pool" aria-hidden="true"></span>
+      <span class="pack-floor" aria-hidden="true"></span>
+      {#- The slot carries the position, the img carries the animation, and
+          they MUST stay separate elements — this is not decoration.
+          `.enter` runs @keyframes rise, which ends on `transform:none` and
+          is declared `forwards`, so an animation-filled transform beats
+          any transform set on the same element in the cascade. Put both on
+          one element and the packs stack dead centre on top of each other
+          with no stagger at all. The homepage cans are built the same way
+          (.can-slot positions, .can.enter animates) for the same reason.
+
+          No width/height attributes: the two cutouts have different aspect
+          ratios and both are sized off the container's height, so there is
+          no layout shift for an intrinsic ratio to prevent. #}
+      {%- for p in family.hero.packs %}
+      <span class="pack-slot {{ p.slot }}">
+        <img class="pack enter" data-d="{{ loop.index }}"
+             src="{{ p.src }}" alt="{{ p.alt }}" fetchpriority="high">
+      </span>
+      {%- endfor %}
+    </div>
+
+  </div>
+</section>

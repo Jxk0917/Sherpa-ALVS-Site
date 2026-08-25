@@ -584,20 +584,26 @@ section[id]{ scroll-margin-top:5.5rem; }
   .plinth{ justify-self:center; width:min(100%,520px); }
 }
 /* ── The plinth's scene ──────────────────────────────────────────────
-   The photograph, plain. No blur, no mask, no filter — one element and
-   one background.
-   Three blur treatments were built here before this and all three came
-   out. Keeping the short version, because each failed for its own reason
-   and they are easy to re-propose:
+   The photograph, plain: one element, one background, no CSS filter.
+   THE BLUR IS REAL BUT IT IS NOT HERE — it is baked into plinth-peak.jpg
+   by gen-plinth-bg.mjs, which is where the radii live and where they have
+   to be re-tuned. Do not add a `filter:blur()` back on top of this; the
+   plate is already soft and stacking a second blur on it is how it went
+   to mush the last time.
+   Three CSS blur treatments were built here before that and all three
+   came out. Keeping the short version, because each failed for its own
+   reason and they are easy to re-propose:
      - sharp middle / blurred edges (a normal spotlight) read as a photo
        pasted into the card; the crisp rectangle in the centre had a hard
        visual boundary and took the eye off the product.
      - uniformly blurred fixed that but flattened the picture to mush.
      - inverted spotlight (heaviest blur behind the can, easing outward)
-       was the best of them, and still came out in favour of this.
+       was the best of them. That is the one Jack asked for on 2026-08-24,
+       and it is what the generator now bakes in — it works there because
+       the plate can be drawn oversize and trimmed, so the blur has real
+       pixels to sample at the frame's edge instead of needing a bleed.
    `inset:0`, not the -6% bleed those versions needed: the bleed existed
-   only so the blurs had real pixels to sample past the frame's edge, and
-   without a blur it just crops the photograph for nothing. */
+   only to feed a CSS filter, and the baked plate does not want one. */
 .plinth-scene{ position:absolute; inset:0; z-index:0;
   background:url('plinth-peak.jpg') center/cover no-repeat; }
 /* Scrim: a light neutral weighting on the lower half only, where the can's
@@ -774,6 +780,39 @@ section[id]{ scroll-margin-top:5.5rem; }
        font-size:.8125rem; font-weight:600; text-decoration:none;
        transition:top .25s var(--ease); }
 .skip:focus{ top:.75rem; }
+
+/* ── Corner stack (homepage only) ────────────────────────────────────
+   Texas compliance + back-to-top, grouped into one small card rather
+   than two separate floating buttons — same hairline-divided-rows
+   device used for the trust badges and spec tiles elsewhere on the
+   site. Hidden (opacity/pointer-events, not display) until main.js
+   toggles .is-visible once the hero has scrolled past, so it never
+   competes with the hero on first paint and never steals a Tab stop
+   before that. */
+.corner-stack{ position:fixed; right:1.5rem; bottom:1.5rem; z-index:55;
+                display:flex; flex-direction:column;
+                background:var(--paper); border:1px solid rgba(26,26,26,.1);
+                border-radius:var(--r-surface); box-shadow:var(--lift-1);
+                overflow:hidden; opacity:0; transform:translateY(14px);
+                pointer-events:none;
+                transition:opacity .35s var(--ease), transform .35s var(--ease); }
+.corner-stack.is-visible{ opacity:1; transform:none; pointer-events:auto; }
+.corner-row{ display:flex; align-items:center; gap:.55rem;
+             padding:.8rem 1.15rem; background:none; border:0; cursor:pointer;
+             font-family:'Poppins',sans-serif; font-weight:600; font-size:.75rem;
+             letter-spacing:.02em; color:var(--charcoal); white-space:nowrap;
+             transition:background-color .25s var(--ease), color .25s var(--ease); }
+.corner-row + .corner-row{ border-top:1px solid var(--mist); }
+.corner-row:hover, .corner-row:focus-visible{ background:rgba(106,21,41,.07); color:var(--crimson); }
+.corner-icon{ flex:none; color:var(--crimson); opacity:.75; }
+.corner-arrow{ transform:rotate(-90deg); }
+@media (max-width:640px){
+  .corner-stack{ right:1rem; bottom:1rem; }
+  .corner-row{ padding:.7rem .95rem; font-size:.6875rem; }
+}
+@media (prefers-reduced-motion: reduce){
+  .corner-stack{ transition:opacity .2s linear; }
+}
 
 /* ── Section tag ─────────────────────────────────────────────────
    A capsule above each section headline, carrying the section's name

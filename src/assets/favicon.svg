@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The wordmark is a script logo and turns to mush at 16px, so the
+       favicon uses the mountain glyph from the can badge instead. Same
+       two-peak shape, same crimson field. -->
+  <rect width="64" height="64" rx="12" fill="#6A1529"/>
+  <path d="M14 44 L27 21 L36 36 L40.5 28 L50 44 Z" fill="#F7F4EF"/>
+  <path d="M36 36 L40.5 28 L50 44 L36.5 44 Z" fill="#F7F4EF" opacity=".62"/>
+</svg>

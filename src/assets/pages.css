@@ -1,0 +1,648 @@
+/* ══════════════════════════════════════════════════════════════════
+   SHERPA — INNER PAGES
+
+   styles.css carries the tokens, the type roles, the buttons, the
+   shared chrome and the homepage. This sheet carries everything that
+   only exists because the site grew from one page to ~33: the page
+   head, breadcrumbs, the product grid and card, the product page,
+   Shop All, Bundles, prose pages, contact, stubs and the compliance
+   dialog. It loads after styles.css and depends on its tokens.
+
+   ONE CASCADE RULE GOVERNS THIS WHOLE SHEET: components colour their
+   own text through a CLASS, never through a bare descendant selector
+   like `.pagehead p`. A descendant selector is (0,1,1) and silently
+   outranks `.tag` at (0,1,0) — which is exactly why the tag capsule
+   sits at the very end of styles.css. Two bugs in this project have
+   already come from bare descendant selectors (`.byline span` eating
+   `.byline-initials`, `.brandband img` eating a full-bleed image).
+   Do not add a third.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Announce bar link + footer compliance button ─────────────────── */
+.announce{ display:flex; align-items:center; justify-content:center;
+           gap:.35rem 1rem; flex-wrap:wrap; }
+.announce-link{ font:inherit; color:inherit; background:none; border:0; cursor:pointer;
+                padding:.1rem 0; letter-spacing:inherit; text-transform:inherit;
+                text-decoration:underline; text-underline-offset:3px;
+                text-decoration-color:rgba(247,244,239,.45);
+                transition:text-decoration-color .25s var(--ease); }
+.announce-link:hover{ text-decoration-color:var(--ivory); }
+
+.legal-btn{ font:inherit; font-size:.75rem; padding:.3rem 0; background:none; border:0;
+            cursor:pointer; color:rgba(247,244,239,.6); text-decoration:none;
+            transition:color .25s var(--ease); }
+.legal-btn:hover{ color:var(--ivory); }
+
+/* Current section in the nav. The underline is the hover affordance,
+   so the current page simply shows it already drawn. */
+.nav-link.is-current{ color:var(--crimson); }
+.nav-link.is-current::after{ transform:scaleX(1); }
+.nav:not(.stuck) .nav-link.is-current{ color:#fff; }
+
+/* ── Page head ───────────────────────────────────────────────────
+   The nav carries margin-bottom:-72px so it overlays whatever sits
+   under it, which is what makes the announce bar, the nav and the
+   homepage hero read as one crimson ground. Every page that is not
+   the homepage therefore needs a crimson field of its own here, or
+   the nav lands on ivory while still showing its ivory logo. */
+.pagehead{ position:relative; overflow:hidden; color:var(--ivory);
+           background:radial-gradient(120% 100% at 72% 30%,
+                     var(--crimson-lift) 0%, var(--crimson) 48%, var(--crimson-deep) 100%);
+           padding-block:calc(72px + clamp(2rem,4.5vw,3.25rem)) clamp(2.25rem,4.5vw,3.5rem); }
+.pagehead-topo{ position:absolute; inset:0; pointer-events:none; z-index:0;
+                color:var(--ivory); overflow:hidden; }
+.pagehead-topo svg{ position:absolute; width:min(1200px,120%); height:auto;
+                    right:-24%; top:-40%; opacity:.06; }
+.pagehead-inner{ position:relative; z-index:1; }
+.pagehead h1{ margin:0; max-width:18ch; }
+.pagehead-blurb{ margin:1.35rem 0 0; max-width:52ch; font-size:1rem;
+                 color:rgba(247,244,239,.82); }
+.pagehead :focus-visible{ outline-color:var(--ivory); }
+
+/* ── Breadcrumbs ─────────────────────────────────────────────────── */
+.crumbs{ margin-bottom:1.5rem; }
+.crumbs ol{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap;
+            align-items:center; gap:.3rem .55rem; }
+.crumbs li{ display:flex; align-items:center; gap:.55rem;
+            font-size:.6875rem; font-weight:600; letter-spacing:.13em;
+            text-transform:uppercase; color:rgba(247,244,239,.62); }
+.crumbs li + li::before{ content:''; width:9px; height:1px; flex:none;
+                         background:rgba(247,244,239,.4); }
+.crumbs a{ color:rgba(247,244,239,.78); text-decoration:none; padding-block:.25rem;
+           transition:color .25s var(--ease); }
+.crumbs a:hover{ color:var(--ivory); }
+.crumbs [aria-current]{ color:var(--ivory); }
+
+/* ── Family hero ─────────────────────────────────────────────────
+   The product-led alternative to .pagehead, for a family whose real
+   packaging can carry the top of the page. Built from Jack's own
+   Gummy Hero.png: headline left, the range stated as a measured rail
+   under it, packs standing on the right.
+
+   It is deliberately the homepage hero's composition rather than a
+   second one — same crimson field, same topo, same two-track grid,
+   same staggered group of products on the right — because a category
+   page that announces itself in a different visual language than the
+   homepage reads as a different site. What changes is the subject.
+
+   Opt-in per family (families.json → `hero`), so the five families
+   without one render .pagehead exactly as before. Structural note
+   carried over from .pagehead: the nav overlays this with
+   margin-bottom:-72px, so .fhero-grid's top padding starts at 72px. */
+.fhero{ position:relative; overflow:hidden; color:var(--ivory);
+        background:radial-gradient(108% 86% at 70% 48%,
+                  var(--crimson-lift) 0%, var(--crimson) 45%, var(--crimson-deep) 100%); }
+.fhero-topo{ position:absolute; inset:0; pointer-events:none; z-index:0;
+             color:var(--ivory); overflow:hidden; }
+.fhero-topo svg{ position:absolute; width:min(1300px,128%); height:auto;
+                 right:-28%; top:-36%; opacity:.055; }
+.fhero-grid{ position:relative; z-index:1; display:grid; align-items:center;
+             gap:clamp(2rem,4.5vw,3rem);
+             padding-block:calc(72px + clamp(1.75rem,4vw,2.75rem)) clamp(2rem,4vw,3rem); }
+@media (min-width:960px){
+  /* The packs track is the wider of the two, which is the opposite of the
+     homepage's split. The headline here is two short words and does not
+     need the room; giving it to the packs instead pulls the group left,
+     closing the dead crimson that otherwise opens between the copy and
+     the product. */
+  .fhero-grid{ grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);
+               gap:clamp(1.5rem,3vw,2.5rem); min-height:min(78vh,660px);
+               padding-block:calc(72px + clamp(1rem,2vw,1.75rem)) clamp(1.25rem,2.5vw,2rem); }
+}
+.fhero-h1{ margin:0; font-size:clamp(2.6rem,5.9vw,4.6rem); }
+.fhero :focus-visible{ outline-color:var(--ivory); }
+
+/* The rail. The reference's own device: the range stated as a measured
+   list instead of described in a sentence, which suits a page whose whole
+   job is "two gummies, three strengths, pick one".
+   Set in the display face — the only place on the site Rubik One does a
+   job other than a headline. That is the risk in this component and it is
+   taken on purpose: at this size the face reads as stamped-on-the-pack
+   rather than as a caption, which is exactly what the reference does, and
+   a Poppins .t-label here made the hero look like every other page head
+   with a picture added. */
+.fhero-rail{ display:flex; flex-wrap:wrap; align-items:center; gap:.55rem .85rem;
+             margin:clamp(1.1rem,2vw,1.5rem) 0 0;
+             font-family:'Rubik One',system-ui,sans-serif; font-weight:400;
+             font-size:clamp(.8rem,1.05vw,.9375rem); text-transform:uppercase;
+             letter-spacing:.1em; line-height:1; color:rgba(247,244,239,.92); }
+/* The separator is a drawn dot rather than a typed middot: a middot in
+   Rubik One at this tracking sits too high and too heavy against the caps.
+   It hangs off the END of each item rather than the start of the next one,
+   which only matters when the rail wraps — and it does wrap, at 390px. A
+   leading separator puts a dot alone at the head of the second line, which
+   reads as a bullet list that lost its first word. */
+.fhero-rail span:not(:last-child)::after{ content:''; display:inline-block;
+                                          width:4px; height:4px; border-radius:50%;
+                                          background:rgba(247,244,239,.45);
+                                          margin-left:.85rem; vertical-align:middle; }
+.fhero-deck{ margin:clamp(1.1rem,2vw,1.5rem) 0 0; max-width:46ch;
+             font-size:1rem; color:rgba(247,244,239,.82); }
+.fhero-actions{ display:flex; flex-wrap:wrap; gap:.75rem .9rem;
+                margin:clamp(1.6rem,3vw,2.15rem) 0 0; }
+/* The dosing advice the family intro used to carry. It stays on the page
+   because it is responsible-use copy for a THC product, but it is set
+   quiet and last: it is the one line here that answers a question the
+   reader has not asked yet. */
+/* .68, not the .62 this started at. Measured against the rendered pixel at
+   390/768/1024/1440/1920, .62 came out at 4.49:1 over the lighter right-hand
+   side of the field at 768px — under AA by a hair, at 13px, where AA is
+   4.5:1. The lesson from the last time this project chased a contrast target
+   was that landing on the line is not landing it; this clears 5:1 at every
+   width and both edges, and is still visibly the quietest line in the hero. */
+.fhero-note{ margin:1.2rem 0 0; max-width:58ch;
+             font-size:.8125rem; color:rgba(247,244,239,.68); }
+
+/* ── The packs ───────────────────────────────────────────────────
+   Real photography, cut out by gen-gummies-shots.mjs. Staggered rather
+   than set side by side, for the reason the homepage cans are: two
+   objects at one depth read as a product grid, and this is a portrait.
+
+   Container height is capped near the cutouts' own 520px so the front
+   pack renders at roughly 1:1 — these are 362x520 source files, the
+   largest Sherpa has, so sizing past that buys blur rather than scale. */
+.fhero-packs{ position:relative; height:clamp(320px,42vw,510px); }
+@media (max-width:959px){
+  /* justify-self, never an auto margin: every child here is absolutely
+     positioned, and auto margins disable stretch, which collapses the
+     track to zero width. This is the bug that made the homepage cans
+     vanish on mobile while working on desktop. */
+  .fhero-packs{ height:clamp(270px,54vw,400px); width:min(100%,480px);
+                justify-self:center; }
+}
+/* A pool of light for the packs to stand in. The Social pouch is crimson
+   on a crimson field, so it needs a lighter ground under it or its edges
+   dissolve; this is what lets the field stay one colour instead of the
+   card-behind-the-product treatment that would break the homepage rhyme. */
+.pack-pool{ position:absolute; inset:-14% -8%; pointer-events:none;
+            background:radial-gradient(46% 46% at 52% 46%,
+                       rgba(255,236,240,.15) 0%, rgba(255,236,240,0) 70%); }
+.pack-floor{ position:absolute; left:50%; bottom:1%; width:104%; height:20%;
+             transform:translateX(-50%); pointer-events:none;
+             background:radial-gradient(50% 50% at 50% 50%,
+                        rgba(20,4,9,.5) 0%, rgba(20,4,9,0) 72%); }
+/* The slot positions, the image animates, and they have to be two
+   elements. `.enter` runs @keyframes rise, whose last frame is
+   `transform:none`, declared `forwards` — an animation's filled value
+   wins over the cascade, so a transform on the same element as `.enter`
+   is silently discarded once the animation lands and both packs end up
+   stacked dead centre. Same split as .can-slot / .can on the homepage. */
+.pack-slot{ position:absolute; left:50%; bottom:0; height:100%; }
+.pack-front{ transform:translateX(-32%) rotate(2.5deg); z-index:3; }
+/* Shorter and lifted off the baseline, which is what reads as "further
+   back" — the same trick as the homepage hero's outer two cans. */
+.pack-back{ height:79%; bottom:6%; transform:translateX(-96%) rotate(-5deg); z-index:2; }
+/* max-width:none overrides the global img rule, which would otherwise cap
+   these at the track width and undo the height-driven sizing. */
+.pack{ height:100%; width:auto; max-width:none;
+       filter:drop-shadow(0 24px 30px rgba(20,4,9,.5)); }
+
+/* ── Placeholder flag ────────────────────────────────────────────
+   The single visual convention for "this has not been supplied yet".
+   Loud enough that it can never be mistaken for finished copy. */
+.flag{ display:inline-block; vertical-align:middle; margin-left:.5rem;
+       padding:.2rem .45rem; border-radius:var(--r-chip);
+       background:rgba(106,21,41,.1); color:var(--crimson);
+       border:1px solid rgba(106,21,41,.22);
+       font-family:'Poppins',sans-serif; font-size:.5625rem; font-weight:600;
+       letter-spacing:.11em; text-transform:uppercase; line-height:1.5; }
+
+/* ── Notice ──────────────────────────────────────────────────────── */
+.notice{ display:flex; align-items:flex-start; gap:.65rem; margin:0 0 1.5rem;
+         padding:.85rem 1.1rem; border-radius:var(--r-control);
+         font-size:.8125rem; line-height:1.6; }
+.notice svg{ flex:none; margin-top:.2rem; }
+.notice-todo{ background:rgba(106,21,41,.07); border:1px solid rgba(106,21,41,.16);
+              color:var(--crimson); }
+.notice-dark{ background:rgba(247,244,239,.08); border:1px solid rgba(247,244,239,.2);
+              color:rgba(247,244,239,.9); }
+.notice code{ font-size:.9em; background:rgba(106,21,41,.1); padding:.05em .3em;
+              border-radius:3px; }
+.notice-dark code{ background:rgba(247,244,239,.14); }
+
+/* ── Product grid ────────────────────────────────────────────────
+   The grid has exactly as many columns as there are products, up to
+   three. Four of the six families hold a single product, and a lone
+   card sitting in a three-column track leaves two thirds of the row
+   empty, which reads as a page that failed to load rather than as a
+   family with one product in it. Hence data-count. */
+.pgrid{ display:grid; gap:clamp(.85rem,1.4vw,1.15rem); grid-template-columns:1fr; }
+@media (min-width:620px){
+  .pgrid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .pgrid[data-count="1"]{ grid-template-columns:minmax(0,1fr); max-width:26rem; }
+}
+@media (min-width:1000px){
+  .pgrid{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .pgrid[data-count="1"]{ grid-template-columns:minmax(0,1fr); max-width:26rem; }
+  .pgrid[data-count="2"]{ grid-template-columns:repeat(2,minmax(0,1fr)); max-width:54rem; }
+}
+
+.pcard{ display:flex; flex-direction:column; min-height:340px; overflow:hidden;
+        border-radius:var(--r-surface); text-decoration:none; color:var(--charcoal);
+        background:var(--paper); border:1px solid rgba(26,26,26,.09);
+        box-shadow:var(--lift-1); isolation:isolate;
+        transition:transform .45s var(--ease), box-shadow .45s var(--ease); }
+.pcard:hover{ transform:translateY(-4px); box-shadow:var(--lift-2); }
+
+.pcard-photo{ position:relative; flex:1; min-height:170px; display:flex;
+              align-items:center; justify-content:center; overflow:hidden;
+              background:var(--ivory); padding:clamp(.6rem,1.4vw,1rem); }
+.pcard-photo img{ max-width:100%; max-height:100%; width:auto; height:auto;
+                  object-fit:contain; transition:transform .6s var(--ease); }
+.pcard:hover .pcard-photo img{ transform:scale(1.03); }
+
+/* A product with no photography falls back to the contour system
+   rather than to a grey box or an invented photo. The card still
+   reads as unfinished, but through the placeholder flag, not through
+   what looks like a broken image. */
+.pcard-topo{ position:absolute; inset:0; overflow:hidden; color:var(--crimson); }
+.pcard-topo svg{ position:absolute; width:160%; height:auto; left:-30%; top:-34%;
+                 opacity:.14; }
+.pcard-noart{ position:relative; margin:0; font-size:.625rem; font-weight:600;
+              letter-spacing:.13em; text-transform:uppercase; color:var(--slate); }
+
+.pcard-body{ padding:clamp(1.15rem,2vw,1.4rem); display:flex; flex-direction:column;
+             gap:.4rem; }
+.pcard-line{ display:flex; align-items:center; gap:.5rem; }
+.pcard-icon{ flex:none; color:var(--crimson); opacity:.6; }
+.pcard-fam{ margin:0; color:var(--crimson); }
+.pcard h3{ margin:0; font-family:'Rubik One',sans-serif; font-weight:400;
+           text-transform:uppercase; letter-spacing:-.03em; line-height:1;
+           font-size:clamp(1.15rem,1.9vw,1.4rem); }
+.pcard-tag{ margin:0; font-size:.8125rem; line-height:1.55; color:var(--slate); }
+.pcard-foot{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between;
+             gap:.5rem .9rem; margin-top:.5rem; padding-top:.8rem;
+             border-top:1px solid var(--mist); }
+.pcard-price{ font-weight:600; font-size:.9375rem; font-variant-numeric:tabular-nums; }
+.pcard-dose{ font-size:.75rem; color:var(--slate); }
+
+/* ── Family strip ────────────────────────────────────────────────── */
+.famstrip{ display:flex; flex-wrap:wrap; gap:.6rem; }
+.famchip{ display:inline-flex; align-items:center; gap:.55rem;
+          padding:.7rem 1rem; border-radius:999px; text-decoration:none;
+          background:var(--paper); border:1px solid rgba(26,26,26,.1);
+          color:var(--charcoal); font-size:.8125rem; font-weight:600;
+          box-shadow:var(--lift-1);
+          transition:transform .3s var(--ease), box-shadow .3s var(--ease),
+                     border-color .3s var(--ease), color .3s var(--ease); }
+.famchip svg{ flex:none; color:var(--crimson); }
+.famchip .arw{ opacity:.5; transition:transform .35s var(--ease); }
+.famchip:hover{ transform:translateY(-2px); box-shadow:var(--lift-2);
+                border-color:rgba(106,21,41,.3); color:var(--crimson); }
+.famchip:hover .arw{ transform:translateX(3px); }
+.shopnav{ border-bottom:1px solid var(--mist); }
+
+/* ── Shop All section heads ──────────────────────────────────────── */
+.shop-head{ display:flex; flex-wrap:wrap; align-items:flex-end;
+            justify-content:space-between; gap:1rem 2rem;
+            margin-bottom:clamp(1.5rem,2.5vw,2rem); }
+.shop-head h2{ margin:0 0 .8rem; }
+.shop-head .t-body{ margin:0; }
+
+/* ── Product page ────────────────────────────────────────────────── */
+.pdp-grid{ display:grid; gap:clamp(2rem,4vw,3.25rem); align-items:start; }
+@media (min-width:900px){
+  .pdp-grid{ grid-template-columns:minmax(0,1fr) minmax(0,.95fr); }
+}
+/* NOT position:sticky. It was here while the photo was the entire left
+   column; now the spec grid and notes sit right below it in the same
+   flex column, and Chromium has a genuine paint bug in that exact
+   combination — a sticky flex item immediately followed by a CSS Grid
+   sibling silently fails to paint the grid's first row of text (glyphs
+   only, box model unaffected — verified with getComputedStyle and
+   confirmed 100% reproducible, then confirmed fixed by removing sticky
+   here). Both columns are comparable height now anyway, so sticky was
+   no longer buying much. Don't re-add it without re-testing this. */
+/* The onset/duration spec grid and the notes bullets live here, under
+   the photo, rather than at the foot of the buy panel — a bare photo
+   read too light next to a panel with a price, a picker and a buy
+   button, so this is what balances the two columns. */
+.pdp-left{ display:flex; flex-direction:column; gap:clamp(1.5rem,2.4vw,2rem); }
+.pdp-left .pdp-specs, .pdp-left .pdp-notes{ margin-top:0; }
+/* The pack shots were all recoloured to --ivory, so the media panel
+   is that exact ivory: on any other fill the photo reads as a pasted
+   rectangle rather than as a product on a sweep. */
+.pdp-media{ position:relative; display:flex; align-items:center; justify-content:center;
+            border-radius:var(--r-surface); overflow:hidden; background:var(--ivory);
+            border:1px solid rgba(26,26,26,.08); box-shadow:var(--lift-1);
+            padding:clamp(1rem,3vw,2.25rem); min-height:clamp(300px,42vw,520px); }
+.pdp-media img{ max-width:100%; max-height:clamp(260px,38vw,460px);
+                width:auto; height:auto; object-fit:contain; }
+.pdp-topo{ position:absolute; inset:0; overflow:hidden; color:var(--crimson); }
+.pdp-topo svg{ position:absolute; width:150%; height:auto; left:-25%; top:-30%; opacity:.13; }
+.pdp-noart{ position:relative; margin:0; max-width:26ch; text-align:center;
+            font-size:.8125rem; font-weight:600; color:var(--slate); }
+
+/* ── Package view tabs (front / back label) ─────────────────────
+   Sits inside .pdp-media, under the photo. Tab-styled rather than
+   picker-styled on purpose: this switches which photograph is shown,
+   not a product attribute, so it should not read as one more choice
+   in the same row as strength and flavour. */
+.viewtabs{ position:absolute; left:50%; bottom:1.1rem; transform:translateX(-50%);
+           display:flex; gap:.25rem; padding:.25rem; border-radius:999px;
+           background:rgba(255,255,255,.86); border:1px solid rgba(26,26,26,.08);
+           box-shadow:var(--lift-1); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+.viewtab{ font:inherit; cursor:pointer; border:0; border-radius:999px;
+          padding:.5rem 1rem; font-family:'Poppins',sans-serif; font-weight:600;
+          font-size:.75rem; letter-spacing:.02em; background:none; color:var(--slate);
+          transition:background-color .25s var(--ease), color .25s var(--ease); }
+.viewtab:hover{ color:var(--charcoal); }
+.viewtab[aria-selected="true"]{ background:var(--crimson); color:#fff; }
+
+.pdp-price{ display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem .75rem;
+            margin-bottom:.6rem; }
+.pdp-price .t-value{ font-size:clamp(1.75rem,3vw,2.25rem); }
+.pdp-pricenote{ font-size:.8125rem; color:var(--slate); }
+.pdp-desc{ margin:0 0 1.75rem; }
+
+/* ── Rating badge ────────────────────────────────────────────────
+   Two stacked five-icon rows: a muted background row (always five)
+   and a crimson foreground row clipped to the rating's own share of
+   the same width, so 4.5 renders as a genuine partial star rather
+   than rounding to a whole one. Both rows share one gap value so
+   they stay pixel-aligned regardless of icon size. */
+.stars-rating{ position:relative; display:inline-flex; vertical-align:middle; }
+.stars-bg{ display:flex; gap:.15rem; color:rgba(26,26,26,.15); }
+.stars-fg{ position:absolute; inset:0 auto 0 0; overflow:hidden;
+           display:flex; gap:.15rem; color:var(--crimson); }
+.stars-rating svg{ width:15px; height:15px; flex:none; }
+.stars-rating-sm svg{ width:13px; height:13px; }
+
+.pdp-rating{ display:flex; align-items:center; gap:.55rem; margin:0 0 1.35rem; }
+.pdp-rating-text{ font-size:.8125rem; font-weight:600; color:var(--charcoal);
+                   font-variant-numeric:tabular-nums; }
+.pdp-rating-count{ font-weight:400; color:var(--slate); }
+
+.picker{ margin-bottom:1.5rem; }
+.picker-label{ margin:0 0 .7rem; color:var(--slate); }
+.picker-unit{ text-transform:none; letter-spacing:.02em; opacity:.75; }
+.picker-opts{ display:flex; flex-wrap:wrap; gap:.5rem; }
+.picker-opt{ font:inherit; cursor:pointer; display:inline-flex; align-items:baseline; gap:.15rem;
+             padding:.6rem .95rem; min-width:3.4rem; justify-content:center;
+             border-radius:var(--r-control); border:1.5px solid var(--mist);
+             background:var(--paper); color:var(--charcoal);
+             font-family:'Poppins',sans-serif; font-weight:600; font-size:.9375rem;
+             font-variant-numeric:tabular-nums;
+             transition:border-color .25s var(--ease), background-color .25s var(--ease),
+                        color .25s var(--ease); }
+.picker-opt-wide{ min-width:0; font-size:.8125rem; }
+.picker-opt:hover{ border-color:rgba(106,21,41,.4); }
+.picker-opt[aria-checked="true"]{ border-color:var(--crimson); background:var(--crimson);
+                                  color:#fff; }
+.picker-u{ font-size:.6875rem; font-weight:600; letter-spacing:.05em;
+           text-transform:uppercase; opacity:.7; }
+.picker-single{ margin:0; font-size:.9375rem; font-weight:600; }
+
+.pdp-buy{ display:flex; flex-wrap:wrap; align-items:center; gap:.85rem 1.25rem; }
+.pdp-selected{ margin:0; font-size:.8125rem; font-weight:600; color:var(--slate);
+               font-variant-numeric:tabular-nums; }
+.pdp-buynote{ margin:.85rem 0 0; font-size:.75rem; line-height:1.6; color:var(--slate);
+              max-width:46ch; }
+.pdp-buynote.is-loud{ color:var(--crimson); font-weight:600; }
+
+.pdp-specs{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+            margin:2rem 0 0; background:var(--mist);
+            border:1px solid var(--mist); border-radius:var(--r-surface); overflow:hidden; }
+@media (min-width:520px){ .pdp-specs{ grid-template-columns:repeat(4,1fr); } }
+.pdp-spec{ background:var(--paper); padding:1.1rem 1rem; }
+.pdp-spec .t-value{ font-size:clamp(1.3rem,2.2vw,1.65rem); }
+.pdp-spec .t-label{ color:var(--slate); margin:.5rem 0 0; }
+/* Six tiles (a variant product's onset, duration, per-piece dose, total
+   per pouch, count and calories) read as two clean rows of three rather
+   than a lopsided 4-then-2. The attribute selector's specificity beats
+   the plain-class rule above regardless of source order. */
+.pdp-specs[data-count="6"]{ grid-template-columns:repeat(2,1fr); }
+@media (min-width:520px){ .pdp-specs[data-count="6"]{ grid-template-columns:repeat(3,1fr); } }
+
+/* ── Trust badges + shipping note (Gummies PDP only) ───────────────
+   Same hairline-divided card device as .pdp-specs, so the two grids
+   read as one family of "fact tiles" rather than two different
+   components. Icons are crimson-on-paper, matching every other icon
+   in the panel. */
+.pdp-trust{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+            margin:1.75rem 0 0; background:var(--mist);
+            border:1px solid var(--mist); border-radius:var(--r-surface); overflow:hidden; }
+@media (min-width:420px){ .pdp-trust{ grid-template-columns:repeat(4,1fr); } }
+.trust-item{ display:flex; flex-direction:column; align-items:center; gap:.6rem;
+             background:var(--paper); padding:1.1rem .6rem; text-align:center; }
+.trust-icon{ color:var(--crimson); }
+.trust-item span{ font-family:'Poppins',sans-serif; font-weight:600; font-size:.6875rem;
+                   letter-spacing:.03em; text-transform:uppercase; line-height:1.35;
+                   color:var(--charcoal); }
+
+/* Deliberately plainer than the card above: two quiet lines, not a
+   second bordered grid, so the panel keeps one clear focal point. */
+.pdp-shipping{ display:grid; gap:.5rem; margin:1rem 0 0; }
+.ship-line{ display:flex; align-items:center; gap:.55rem; margin:0;
+            font-size:.75rem; font-weight:500; color:var(--slate); }
+.ship-line svg{ flex:none; color:var(--crimson); opacity:.65; }
+
+/* ── Ingredients ─────────────────────────────────────────────────
+   A plain comma-separated line, not a chip row: that is the actual
+   convention on the pack itself (and on every food label), so it is
+   also the least surprising way to show it here. */
+.pdp-ingredients{ margin-top:1.75rem; padding-top:1.5rem; border-top:1px solid var(--mist); }
+.ingredient-list{ margin:.6rem 0 0; font-size:.8125rem; line-height:1.7; color:var(--slate); }
+
+.pdp-notes{ margin:1.75rem 0 0; padding:0; list-style:none; display:grid; gap:.65rem; }
+.pdp-notes li{ position:relative; padding-left:1.15rem; font-size:.8125rem;
+               line-height:1.6; color:var(--slate); }
+.pdp-notes li::before{ content:''; position:absolute; left:0; top:.62em;
+                       width:5px; height:5px; border-radius:999px; background:var(--crimson); }
+
+/* ── Certificates ────────────────────────────────────────────────── */
+.coa-grid{ display:grid; gap:clamp(.85rem,1.4vw,1.15rem); grid-template-columns:1fr; }
+@media (min-width:680px){ .coa-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1024px){ .coa-grid{ grid-template-columns:repeat(3,1fr); } }
+.coa-empty{ margin:0; padding:0 1.4rem 1.4rem; font-size:.8125rem; line-height:1.6;
+            color:rgba(247,244,239,.66); }
+.coa-empty code{ font-size:.9em; background:rgba(247,244,239,.12);
+                 padding:.05em .3em; border-radius:3px; }
+.coa-foot{ padding:0 1.4rem 1.2rem; }
+
+.readcoa{ display:grid; gap:clamp(1.25rem,2.5vw,2rem); grid-template-columns:1fr; }
+@media (min-width:760px){ .readcoa{ grid-template-columns:repeat(3,1fr); } }
+.readcoa-item{ display:flex; gap:.9rem; }
+.readcoa-item svg{ flex:none; margin-top:.2rem; color:var(--crimson); }
+.readcoa-item h3{ margin:0 0 .35rem; font-size:.9375rem; font-weight:600; }
+.readcoa-item p{ margin:0; font-size:.875rem; line-height:1.6; color:var(--slate); }
+
+/* ── Bundles ─────────────────────────────────────────────────────── */
+.bundle-wide{ display:flex; flex-direction:column; overflow:hidden;
+              border-radius:var(--r-surface); text-decoration:none;
+              background:var(--crimson-deep); color:var(--ivory);
+              transition:transform .45s var(--ease), box-shadow .45s var(--ease); }
+.bundle-wide:hover{ transform:translateY(-4px); box-shadow:var(--lift-2); }
+/* The bundle composite carries its own floor out to the frame edge,
+   so its panel matches that floor rather than --ivory. Same reason
+   the homepage bundle tile does. */
+.bundle-photo{ background:var(--shot-ground); display:flex; align-items:center;
+               justify-content:center; padding:1.25rem; }
+.bundle-photo img{ width:100%; height:auto; }
+.bundle-body{ padding:clamp(1.4rem,2.2vw,1.85rem); }
+.bundle-body h3{ margin:0 0 .5rem; font-family:'Rubik One',sans-serif; font-weight:400;
+                 text-transform:uppercase; letter-spacing:-.03em; line-height:1;
+                 font-size:clamp(1.35rem,2.1vw,1.75rem); }
+.bundle-body p{ margin:0; font-size:.875rem; line-height:1.6;
+                color:rgba(247,244,239,.78); max-width:40ch; }
+.bundle-body .tile-meta{ color:rgba(247,244,239,.78); }
+@media (min-width:1024px){
+  .bundle-wide{ flex-direction:row; align-items:stretch; }
+  .bundle-photo{ flex:1 1 58%; padding:1.5rem; }
+  .bundle-body{ flex:1 1 42%; display:flex; flex-direction:column; justify-content:center; }
+}
+
+.bundle-hero{ display:grid; gap:clamp(2rem,4vw,3rem); align-items:center; }
+@media (min-width:900px){ .bundle-hero{ grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); } }
+.bundle-hero-photo{ background:var(--shot-ground); border-radius:var(--r-surface);
+                    padding:clamp(1rem,2.5vw,1.75rem); box-shadow:var(--lift-1); }
+.bundle-hero-photo img{ width:100%; height:auto; }
+
+.kits{ display:grid; gap:clamp(.85rem,1.4vw,1.15rem); grid-template-columns:1fr;
+       align-items:start; }
+@media (min-width:760px){ .kits{ grid-template-columns:repeat(3,1fr); } }
+.kit{ background:var(--paper); border:1px solid rgba(26,26,26,.09);
+      border-radius:var(--r-surface); padding:clamp(1.35rem,2.2vw,1.75rem);
+      box-shadow:var(--lift-1); }
+/* The middle kit is the one most people take, and it says so with
+   elevation and colour rather than with a badge shouting about it. */
+.kit-lead{ background:var(--crimson); color:var(--ivory); border-color:transparent;
+           box-shadow:var(--lift-3); }
+.kit-head{ display:flex; flex-wrap:wrap; align-items:baseline;
+           justify-content:space-between; gap:.5rem .9rem; margin-bottom:1.1rem;
+           padding-bottom:1.1rem; border-bottom:1px solid var(--mist); }
+.kit-lead .kit-head{ border-bottom-color:rgba(247,244,239,.22); }
+.kit-head .t-label{ margin:0; color:var(--crimson); }
+.kit-lead .kit-head .t-label{ color:rgba(247,244,239,.82); }
+.kit-price{ margin:0; font-weight:600; font-size:.9375rem; font-variant-numeric:tabular-nums; }
+.kit-lead .flag{ background:rgba(247,244,239,.16); border-color:rgba(247,244,239,.3);
+                 color:var(--ivory); }
+.kit h3{ margin:0 0 .6rem; font-size:clamp(1.35rem,2.1vw,1.7rem);
+         letter-spacing:-.03em; line-height:1; }
+.kit-blurb{ margin:0 0 1.35rem; font-size:.875rem; line-height:1.6; color:var(--slate); }
+.kit-lead .kit-blurb{ color:rgba(247,244,239,.8); }
+.kit-list{ margin:0 0 1.35rem; padding:0; list-style:none; display:grid; gap:.5rem; }
+.kit-list li{ position:relative; padding-left:1.15rem; font-size:.8125rem; line-height:1.55; }
+.kit-list li::before{ content:''; position:absolute; left:0; top:.6em; width:5px; height:5px;
+                      border-radius:999px; background:var(--crimson); }
+.kit-lead .kit-list li::before{ background:var(--ivory); }
+.kit-save{ margin:0; font-size:.6875rem; font-weight:600; letter-spacing:.13em;
+           text-transform:uppercase; color:var(--crimson); }
+.kit-lead .kit-save{ color:var(--ivory); }
+.kit-cta{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+          gap:1rem 2rem; margin-top:clamp(2rem,3.5vw,2.75rem); padding-top:2rem;
+          border-top:1px solid var(--mist); }
+
+/* ── Prose (legal, FAQ, About) ───────────────────────────────────
+   Element selectors are scoped under .prose so they cannot reach any
+   other part of the page. Markdown output has no classes to hook. */
+.prose{ max-width:68ch; }
+.prose h2{ margin:2.75rem 0 .9rem; font-family:'Rubik One',sans-serif; font-weight:400;
+           text-transform:uppercase; letter-spacing:-.03em; line-height:1.05;
+           font-size:clamp(1.25rem,2.2vw,1.6rem); }
+.prose h2:first-child{ margin-top:0; }
+.prose h3{ margin:1.85rem 0 .55rem; font-size:1rem; font-weight:600;
+           letter-spacing:-.01em; color:var(--charcoal); }
+.prose p{ margin:0 0 1.05rem; color:var(--slate); line-height:1.75; }
+.prose-lead{ font-size:1.0625rem; }
+.prose ul{ margin:0 0 1.35rem; padding:0; list-style:none; display:grid; gap:.6rem; }
+.prose li{ position:relative; padding-left:1.25rem; color:var(--slate); line-height:1.7; }
+.prose li::before{ content:''; position:absolute; left:0; top:.68em; width:5px; height:5px;
+                   border-radius:999px; background:var(--crimson); }
+.prose a{ color:var(--crimson); text-decoration:underline; text-underline-offset:3px;
+          text-decoration-thickness:1px; }
+.prose a:hover{ color:var(--crimson-deep); }
+.prose-meta{ margin-top:2.5rem; padding-top:1.35rem; border-top:1px solid var(--mist);
+             font-size:.75rem; letter-spacing:.06em; text-transform:uppercase;
+             font-weight:600; }
+.prose .notice{ color:var(--crimson); }
+
+/* ── Contact ─────────────────────────────────────────────────────── */
+.contact-grid{ display:grid; gap:clamp(2rem,4vw,3.25rem); align-items:start; }
+@media (min-width:900px){ .contact-grid{ grid-template-columns:minmax(0,.9fr) minmax(0,1fr); } }
+.contact-rows{ margin-top:1.75rem; }
+.contact-row{ display:grid; gap:.2rem; padding:.9rem 0; border-bottom:1px solid var(--mist); }
+@media (min-width:520px){
+  .contact-row{ grid-template-columns:9rem 1fr; gap:1rem; align-items:baseline; }
+}
+.contact-row .t-label{ margin:0; color:var(--slate); }
+.contact-row p:last-child{ margin:0; font-size:.9375rem; }
+.contact-row a{ color:var(--crimson); text-decoration:underline; text-underline-offset:3px; }
+
+.contact-card{ background:var(--paper); border:1px solid rgba(26,26,26,.09);
+               border-radius:var(--r-surface); box-shadow:var(--lift-2);
+               padding:clamp(1.5rem,3vw,2.25rem); }
+.contact-card h3{ margin:0 0 1.5rem; font-size:clamp(1.35rem,2.1vw,1.7rem);
+                  letter-spacing:-.03em; line-height:1; }
+.cform{ display:grid; gap:1.15rem; }
+.cfield{ display:grid; gap:.45rem; }
+.cfield .t-label{ margin:0; color:var(--slate); }
+.cfield input, .cfield textarea, .cfield select{
+  font:inherit; font-size:.9375rem; padding:.85rem 1rem; width:100%;
+  border-radius:var(--r-control); border:1.5px solid var(--mist);
+  background:var(--ivory); color:var(--charcoal);
+  transition:border-color .25s var(--ease), background-color .25s var(--ease); }
+.cfield textarea{ resize:vertical; min-height:7rem; line-height:1.6; }
+.cfield input:hover, .cfield textarea:hover, .cfield select:hover{
+  border-color:rgba(106,21,41,.35); }
+.cfield input:focus, .cfield textarea:focus, .cfield select:focus{
+  border-color:var(--crimson); background:var(--paper); }
+.cfield [aria-invalid="true"]{ border-color:#A32020; background:rgba(163,32,32,.05); }
+.cfield-error{ margin:0; font-size:.75rem; font-weight:600; color:#A32020; }
+.cfield-error[hidden]{ display:none; }
+.cform-note{ margin:0; font-size:.75rem; line-height:1.6; color:var(--slate); }
+.cform-note.is-loud{ color:var(--crimson); font-weight:600; }
+
+/* ── Stub pages ──────────────────────────────────────────────────── */
+.stub{ max-width:60ch; }
+.stub-body{ margin:0 0 2rem; }
+.stub-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:1rem 1.75rem; }
+
+/* ── Compliance dialog ───────────────────────────────────────────
+   `display` is scoped to :not([hidden]) deliberately. Setting it
+   unconditionally on a [hidden]-toggled element outranks the UA
+   stylesheet's [hidden]{display:none} at equal specificity, which
+   turns this into an invisible full-viewport click-catcher that
+   silently eats every click on the page. That bug shipped here once
+   already. */
+.compliance-modal{ position:fixed; inset:0; z-index:80; }
+.compliance-modal:not([hidden]){ display:grid; place-items:center;
+                                 padding:clamp(1rem,4vw,2.5rem); }
+.compliance-scrim{ position:absolute; inset:0; background:rgba(12,4,8,.62);
+                   opacity:0; transition:opacity .35s var(--ease);
+                   -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); }
+.compliance-modal.open .compliance-scrim{ opacity:1; }
+
+.compliance-card{ position:relative; z-index:1; width:min(100%,620px);
+                  max-height:min(88dvh,760px); overflow-y:auto;
+                  background:var(--ivory); border-radius:var(--r-surface);
+                  box-shadow:var(--lift-3);
+                  opacity:0; transform:translateY(14px) scale(.98);
+                  transition:opacity .38s var(--ease), transform .38s var(--ease); }
+.compliance-modal.open .compliance-card{ opacity:1; transform:none; }
+
+.compliance-head{ position:sticky; top:0; z-index:2; display:flex; align-items:center;
+                  justify-content:space-between; gap:1rem;
+                  padding:1rem clamp(1.25rem,3vw,2rem);
+                  background:var(--crimson); color:var(--ivory); }
+.compliance-head .t-label{ margin:0; }
+.compliance-head .iconbtn{ color:var(--ivory); flex:none; }
+.compliance-head .iconbtn:hover{ background:rgba(247,244,239,.16); color:#fff; }
+.compliance-head :focus-visible{ outline-color:var(--ivory); }
+
+.compliance-body{ padding:clamp(1.5rem,3vw,2.25rem); }
+.compliance-body h2{ margin:0 0 .85rem; }
+.compliance-lead{ margin:0 0 1.75rem; font-weight:600; font-size:1rem;
+                  color:var(--crimson); }
+.compliance-section{ margin-bottom:1.5rem; }
+.compliance-section h3{ margin:0 0 .45rem; font-size:.6875rem; font-weight:600;
+                        letter-spacing:.15em; text-transform:uppercase;
+                        color:var(--slate); }
+.compliance-section p{ margin:0; font-size:.875rem; line-height:1.7; color:var(--charcoal); }
+.compliance-foot{ margin:0 0 1.5rem; padding-top:1.25rem; border-top:1px solid var(--mist);
+                  font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase;
+                  font-weight:600; color:var(--slate); line-height:1.7; }
+
+@media (prefers-reduced-motion:reduce){
+  .compliance-scrim, .compliance-card{ opacity:1; transform:none; }
+}

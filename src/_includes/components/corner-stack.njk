@@ -1,0 +1,19 @@
+{# ═══ CORNER STACK (homepage only) ═══
+   Jack, 2026-08-24: move "Texas compliance" out of the announcement bar
+   and down into a fixed bottom-right widget, paired with a back-to-top
+   control. Scoped to "/" only — every other page keeps the compliance
+   link in the top bar (see nav.njk). Hidden until the visitor has
+   scrolled roughly past the hero (main.js), so it doesn't compete with
+   the hero on first paint. The compliance button needs no new JS: it
+   carries the same [data-compliance-open] attribute the announce-bar
+   link used, and the shared dialog wiring in main.js binds to every
+   element with that attribute, wherever it lives. #}
+<div class="corner-stack" id="corner-stack">
+  <button class="corner-row" type="button" data-compliance-open>
+    <span>Texas compliance</span>
+  </button>
+  <button class="corner-row" type="button" id="back-to-top">
+    <svg class="corner-icon corner-arrow" width="15" height="15" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+    <span>Back to top</span>
+  </button>
+</div>

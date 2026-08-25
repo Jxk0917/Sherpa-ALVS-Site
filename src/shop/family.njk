@@ -1,0 +1,11 @@
+---
+layout: layouts/family.njk
+pagination:
+  data: families
+  size: 1
+  alias: family
+permalink: "/shop/{{ family.slug }}/"
+eleventyComputed:
+  title: "{{ family.name }} · Sherpa"
+  description: "{{ family.blurb }}"
+---

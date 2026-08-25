@@ -1,0 +1,21 @@
+---
+layout: layouts/base.njk
+---
+{%- set ph = {
+  eyebrow: eyebrow,
+  fact: fact,
+  heading: heading or title,
+  blurb: blurb,
+  crumbs: crumbs
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+  <section class="band">
+    <div class="shell">
+      <div class="prose reveal">
+        {{ content | safe }}
+      </div>
+    </div>
+  </section>
+</main>

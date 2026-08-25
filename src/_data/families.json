@@ -1,0 +1,96 @@
+[
+  {
+    "slug": "gummies",
+    "nav": "Gummies",
+    "name": "THC Gummies",
+    "meta": "10, 25 or 100 mg per piece",
+    "blurb": "Sherpa Social and Sleep Gummies — three strengths each, the same real fruit base.",
+    "intro": "Two gummies, three strengths each, built on the same fruit base: Social for daytime ease, Sleep for winding down. Start at 10 mg if you are new to edibles and give it a full 45 minutes before deciding you need more.",
+    "icon": "i-leaf",
+    "treatment": "tile-crimson",
+    "span": "b-gummies",
+    "image": "/assets/product-gummies.png",
+    "hero": {
+      "heading": "Find your<br>gummy.",
+      "rail": ["Social", "Sleep", "10", "25", "100 mg"],
+      "deck": "Two gummies on the same real-fruit base, three strengths each. Social for daytime ease, Sleep for winding down.",
+      "note": "New to edibles? Start at 10 mg and give it a full 45 minutes.",
+      "actions": [
+        { "label": "Shop Social Gummies", "url": "/shop/gummies/social-gummies/", "style": "btn-light" },
+        { "label": "Shop Sleep Gummies", "url": "/shop/gummies/sleep-gummies/", "style": "btn-on-dark" }
+      ],
+      "packs": [
+        {
+          "src": "/assets/cut-sleep-gummies-25-front.png",
+          "alt": "Sherpa Sleep Gummies pouch, Blackberry Lemonade, 25 mg per piece",
+          "slot": "pack-back"
+        },
+        {
+          "src": "/assets/cut-gummies-25-front.png",
+          "alt": "Sherpa Social Gummies pouch, Strawberry Bellini, 25 mg per piece",
+          "slot": "pack-front"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "drinks",
+    "nav": "Drinks",
+    "name": "THC Drinks",
+    "meta": "5 to 100 mg THC",
+    "blurb": "Nano-emulsified seltzers, plus Spirits: a 750 ml non-alcoholic bottle at 5 or 10 mg.",
+    "intro": "Nano-emulsification is why a Sherpa drink lands in about 15 minutes instead of the 45 to 90 you would wait on an edible. Two formats: a single-serve can and a bottle you pour.",
+    "icon": "i-cup",
+    "treatment": "tile-paper",
+    "span": "b-drinks",
+    "image": "/assets/product-drinks.png"
+  },
+  {
+    "slug": "baked-goods",
+    "nav": "Baked Goods",
+    "name": "Baked Goods",
+    "meta": "15 to 25 mg THC",
+    "blurb": "Taffy, Caramel Bites and Krispies, each dosed and labelled on its own.",
+    "intro": "Three separate products rather than three flavours of one. Each carries its own strength on the front of the pack, so moving between them never means recalculating.",
+    "icon": "i-pack",
+    "treatment": "tile-paper",
+    "span": "b-baked",
+    "image": "/assets/product-krispies.png"
+  },
+  {
+    "slug": "wellness",
+    "nav": "Wellness",
+    "name": "Wellness",
+    "meta": "200 mg THC · 2000 mg CBD",
+    "blurb": "Mint-scented relief roll-on, formulated 10:1 CBD to THC for recovery.",
+    "intro": "Topical, not ingested. The 10:1 ratio is built for recovery rather than for a lift, and it goes on where it hurts instead of through your system.",
+    "icon": "i-compass",
+    "treatment": "tile-dark",
+    "span": "b-wellness",
+    "image": "/assets/product-wellness.png"
+  },
+  {
+    "slug": "pet-treats",
+    "nav": "Pet Treats",
+    "name": "CBD Pet Treats",
+    "meta": "25 mg CBD · THC-free",
+    "blurb": "Dawg Snax, vet-formulated chews sized by weight. Bacon Buffet and more flavours.",
+    "intro": "THC-free, so there is nothing here that can make a dog high. Sized by body weight and formulated with a vet.",
+    "icon": "i-paw",
+    "treatment": "tile-paper",
+    "span": "b-pet",
+    "image": "/assets/product-pet.png"
+  },
+  {
+    "slug": "quick-stix",
+    "nav": "Quick Stix",
+    "name": "Quick Stix",
+    "meta": "10 to 25 mg THC",
+    "blurb": "Fast-acting THC drink mix, six sticks a pack in Pure Unflavored.",
+    "intro": "A drink mix rather than a drink. Six single-serve sticks a pack, unflavoured, for wherever carrying a can does not work.",
+    "icon": "i-bolt",
+    "treatment": "tile-crimson",
+    "span": "b-stix",
+    "image": "/assets/product-stix.png"
+  }
+]

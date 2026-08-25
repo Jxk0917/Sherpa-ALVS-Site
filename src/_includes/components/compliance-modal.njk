@@ -1,0 +1,67 @@
+<!-- ═══ COMPLIANCE DISCLOSURE ═══
+     Restored after being dropped in the Eleventy migration. Copy comes
+     from the real disclosure graphic, not paraphrased.
+
+     Two openers, both [data-compliance-open]: the announcement bar and
+     the footer's legal row. The open/close JS mirrors the mobile menu
+     exactly (inert the background, trap focus, Escape, return focus).
+
+     The display rule is scoped to :not([hidden]) on purpose. Setting
+     `display` unconditionally on a [hidden]-toggled element outranks the
+     UA stylesheet's [hidden]{display:none}, which turns this into a
+     full-viewport click-catcher that silently eats every click on the
+     page. That bug shipped here once already. -->
+<div class="compliance-modal" id="compliance-modal" role="dialog" aria-modal="true"
+     aria-labelledby="compliance-title" hidden>
+  <div class="compliance-scrim" data-compliance-close></div>
+
+  <div class="compliance-card">
+    <div class="compliance-head">
+      <p class="t-label">Texas Delta-8 and Delta-10 ban &middot; In effect July 31</p>
+      <button class="iconbtn" type="button" id="compliance-close" aria-label="Close">
+        <svg width="22" height="22" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-close"/></svg>
+      </button>
+    </div>
+
+    <div class="compliance-body">
+      <h2 class="t-display t-md" id="compliance-title">Sherpa remains<br>100% Texas compliant.</h2>
+      <p class="compliance-lead">We're not pulling a single product.</p>
+
+      <div class="compliance-section">
+        <h3>What changed</h3>
+        <p>
+          As of July 31, Delta 8, Delta 10, and similar THC isomers are Schedule I controlled
+          substances in Texas. Products containing them are coming off shelves across the state.
+        </p>
+      </div>
+
+      <div class="compliance-section">
+        <h3>Why Sherpa isn't affected</h3>
+        <p>
+          Every Sherpa product is made with <b>hemp derived Delta 9 THC at or below 0.3% by dry
+          weight</b>, the standard under both Texas and federal law. Every batch is third party lab
+          tested and supported by a Certificate of Analysis verifying compliance. Nothing in our
+          lineup contains Delta 8 or Delta 10, so nothing is being pulled. Compliance isn't a
+          checkbox for us. It's the foundation of this brand.
+        </p>
+      </div>
+
+      <div class="compliance-section">
+        <h3>Where we stand</h3>
+        <p>
+          We're not fans of bans, and we won't pretend otherwise. Tested, labeled, 21+ hemp products
+          deserve smart regulation, and we'll keep making that case. We track every bill, rule, and
+          ruling that touches hemp, and we'll keep you posted as things move.
+        </p>
+      </div>
+
+      <p class="compliance-foot">
+        21+ only &middot; Hemp derived Delta-9 THC &middot; Under 0.3% THC by weight &middot; Please enjoy responsibly
+      </p>
+
+      <a class="btn btn-primary" href="/learn/lab-results/">
+        See the lab results <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+      </a>
+    </div>
+  </div>
+</div>

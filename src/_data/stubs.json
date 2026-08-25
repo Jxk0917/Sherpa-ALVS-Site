@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "learn/dosing-guide",
+    "section": "Learn",
+    "name": "Dosing guide",
+    "heading": "The dosing<br>guide.",
+    "blurb": "Eight pages on onset, tolerance and what to do if you take too much.",
+    "body": "The guide itself exists as a lead magnet on the homepage. Turning it into a page needs the eight pages of copy, which have not been supplied.",
+    "cta": { "label": "Find your dose", "url": "/#dose" }
+  },
+  {
+    "slug": "learn/journal",
+    "section": "Learn",
+    "name": "Journal",
+    "heading": "Journal.",
+    "blurb": "Writing on dosing, hemp policy and what we are working on.",
+    "body": "Deferred until there are at least three posts worth reading. An empty blog is worse than no blog.",
+    "cta": { "label": "Read the FAQ instead", "url": "/learn/faq/" }
+  },
+  {
+    "slug": "company/stockists",
+    "section": "Company",
+    "name": "Stockists",
+    "heading": "Where to<br>buy Sherpa.",
+    "blurb": "Retailers carrying Sherpa across Texas and beyond.",
+    "body": "Needs a real retailer list with addresses. None has been supplied, and an invented one would send people to shops that do not stock us.",
+    "cta": { "label": "Buy direct", "url": "/shop/" }
+  },
+  {
+    "slug": "company/wholesale",
+    "section": "Company",
+    "name": "Wholesale",
+    "heading": "Wholesale.",
+    "blurb": "Carry Sherpa in your shop, bar or dispensary.",
+    "body": "Needs minimums, case sizes, margins and an application route before it can say anything useful.",
+    "cta": { "label": "Contact us", "url": "/company/contact/" }
+  },
+  {
+    "slug": "company/careers",
+    "section": "Company",
+    "name": "Careers",
+    "heading": "Careers.",
+    "blurb": "Open roles at Sherpa.",
+    "body": "No open roles have been supplied. This page exists so the footer link resolves.",
+    "cta": { "label": "About Sherpa", "url": "/company/about/" }
+  },
+  {
+    "slug": "legal/compliance",
+    "section": "Legal",
+    "name": "Compliance",
+    "heading": "Texas<br>compliance.",
+    "blurb": "Why the Delta-8 and Delta-10 ban takes nothing off our shelf.",
+    "body": "The full disclosure opens as a dialog from the announcement bar and the footer. A standalone page version of the same copy goes here, so it can be linked to directly and indexed.",
+    "cta": { "label": "Read the disclosure", "url": "#", "modal": true }
+  }
+]

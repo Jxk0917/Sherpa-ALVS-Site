@@ -1,0 +1,95 @@
+---
+layout: layouts/base.njk
+title: "About · Sherpa"
+description: "Sherpa makes hemp measured to the milligram, from San Antonio, Texas."
+permalink: "/company/about/"
+---
+
+{%- set ph = {
+  eyebrow: "About",
+  fact: "San Antonio, TX",
+  heading: "Nobody<br>summits alone.",
+  blurb: "Sherpa exists because the honest answer to how much should I take was, for years, a guess.",
+  crumbs: [{ label: "Company" }, { label: "About" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+<section class="band">
+  <div class="shell track">
+    <aside class="rail rail-sticky reveal" aria-label="At a glance">
+      <div>
+        <p class="t-value" style="font-size:1.5rem">2026</p>
+        <p class="t-label" style="color:var(--slate);margin:.4rem 0 0">Founded</p>
+      </div>
+      <div>
+        <p class="t-value" style="font-size:1.5rem">&plusmn;5<span class="t-unit">%</span></p>
+        <p class="t-label" style="color:var(--slate);margin:.4rem 0 0">Dose accuracy</p>
+      </div>
+      <div>
+        <p class="t-sub" style="font-size:.8125rem">San Antonio, Texas</p>
+        <p class="t-body" style="font-size:.75rem;margin:.3rem 0 0">Grown and crafted in state.</p>
+      </div>
+    </aside>
+
+    <div class="prose reveal" data-d="1">
+      <p class="prose-lead">
+        Most hemp is sold on vibes. A vague strength on the front, no certificate, and a customer
+        left to work out the rest by trial and error. That is a bad way to sell something people
+        put in their bodies.
+      </p>
+
+      <h2>What we actually do differently</h2>
+      <p>
+        Every batch is third party tested before it ships, and the certificate is published rather
+        than filed. Onset and duration are printed on the package in plain language, not buried in
+        a FAQ. And the number on the front of the pack is the number the lab found, within 5%.
+      </p>
+
+      <h2>Why the mountain</h2>
+      <p>
+        A sherpa does not carry you up. They know the route, they tell you what the next section is
+        going to feel like, and they make sure you are equipped for it. That is the entire product
+        philosophy, and it is why the dose instrument on the homepage is the first thing you meet
+        rather than a product grid.
+      </p>
+
+      <h2>Texas</h2>
+      <p>
+        Grown and crafted in San Antonio. Every Sherpa product is hemp-derived Delta-9 THC at or
+        below 0.3% by dry weight, the standard under both Texas and federal law. Nothing in the
+        lineup contains Delta-8 or Delta-10, which is why the state's ban on those isomers took
+        nothing off our shelf.
+      </p>
+
+      <p class="notice notice-todo">
+        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-compass"/></svg>
+        Founding date, team, facility and the founder's story are placeholders. Supply the real
+        history and this page fills in.
+      </p>
+
+      <h2>[PLACEHOLDER] Who is behind it</h2>
+      <p>
+        [PLACEHOLDER] Founder names, backgrounds and photography have not been supplied. This
+        section is where they go.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BRAND BAND ═══ -->
+<section class="brandband band">
+  <div class="topo" aria-hidden="true" style="color:var(--ivory);--to:.13;--tw:118%;--tl:-9%;--tt:-38%">
+    <svg viewBox="0 0 1200 900"><use href="#c-pass"/></svg>
+  </div>
+  <div class="shell brandband-inner">
+    <img class="reveal" src="/assets/logo-white.png" alt="Sherpa" width="318" height="140">
+    <h2 class="t-display t-lg reveal" data-d="1">Guided, not sold to.</h2>
+    <p class="reveal" data-d="2">Every order ships with a dosing card and a real number to call.</p>
+  </div>
+</section>
+
+{% include "components/guarantee-strip.njk" %}
+
+</main>

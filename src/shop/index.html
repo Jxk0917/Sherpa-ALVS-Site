@@ -1,0 +1,81 @@
+---
+layout: layouts/base.njk
+title: "Shop all · Sherpa"
+description: "Every Sherpa product in one place. Nine products across six families, each dosed, tested and labelled the same way."
+---
+{% from "components/product-card.njk" import card %}
+
+{%- set ph = {
+  eyebrow: "The range",
+  fact: products.length + " products",
+  heading: "Shop all.",
+  blurb: "Six families, nine products, one standard. Every one is dosed, tested and labelled the same way, so moving between them never means starting over.",
+  crumbs: [{ label: "Shop" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+<!-- ═══ FAMILY FILTER ═══
+     Anchors rather than a JS filter: nine products is small enough that
+     hiding six of them is worse than letting the reader scroll past. -->
+<section class="band-sm shopnav">
+  <div class="shell">
+    <div class="famstrip">
+      {%- for f in families %}
+      <a class="famchip" href="#{{ f.slug }}">
+        <svg width="19" height="19" aria-hidden="true" viewBox="0 0 24 24"><use href="#{{ f.icon }}"/></svg>
+        <span>{{ f.name }}</span>
+      </a>
+      {%- endfor %}
+      <a class="famchip" href="/shop/bundles/">
+        <svg width="19" height="19" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-mountain"/></svg>
+        <span>Bundles</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{%- for f in families %}
+{%- set items = products | byFamily(f.slug) %}
+<section class="band" id="{{ f.slug }}">
+  <div class="shell">
+    <div class="shop-head reveal">
+      <div>
+        <h2 class="t-display t-md">{{ f.name }}</h2>
+        <p class="t-body">{{ f.intro }}</p>
+      </div>
+      <a class="btn btn-text" href="/shop/{{ f.slug }}/">
+        {{ f.nav }} in full <svg width="18" height="18" class="arw" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-arrow"/></svg>
+      </a>
+    </div>
+    <div class="pgrid" data-count="{{ items.length }}">
+      {%- for p in items %}{{ card(p, families, loop.index0) }}{% endfor %}
+    </div>
+  </div>
+</section>
+{%- endfor %}
+
+<!-- ═══ BUNDLES CLOSER ═══ -->
+<section class="band">
+  <div class="shell">
+    <a class="bundle-wide reveal" href="/shop/bundles/">
+      <div class="bundle-photo">
+        <img src="/assets/product-bundle.png" width="1400" height="580" loading="lazy"
+             alt="A Sherpa bundle: gummies, seltzers, Quick Stix, krispies, roll-on and pet treats together">
+      </div>
+      <div class="bundle-body">
+        <div class="tile-body-head">
+          <svg class="tile-icon" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-mountain"/></svg>
+          <p class="t-label tile-meta">Save up to 25%</p>
+        </div>
+        <h3>Bundles</h3>
+        <p>Build a kit across formats and pay one price for the whole climb.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+{% include "components/guarantee-strip.njk" %}
+
+</main>

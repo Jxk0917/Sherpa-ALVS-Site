@@ -1,0 +1,39 @@
+<!-- ═══ PAGE HEAD ═══
+     The nav carries margin-bottom:-72px so it overlays the field beneath
+     it, which is what makes the announce bar, the nav and the homepage
+     hero read as one crimson ground. Every inner page therefore needs a
+     crimson field of its own directly under the nav, or the nav overlays
+     the page's first section and the ivory-on-ivory logo disappears.
+     This is that field.
+
+     Expects a `ph` object: { eyebrow, fact, heading, blurb, crumbs }. -->
+<section class="pagehead">
+  <div class="pagehead-topo" aria-hidden="true"><svg viewBox="0 0 1200 900"><use href="#c-ridge"/></svg></div>
+  <div class="shell pagehead-inner">
+
+    {%- if ph.crumbs %}
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        {%- for c in ph.crumbs %}
+        <li>
+          {%- if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>
+          {%- else %}<span aria-current="page">{{ c.label }}</span>{% endif %}
+        </li>
+        {%- endfor %}
+      </ol>
+    </nav>
+    {%- endif %}
+
+    {%- if ph.eyebrow %}
+    <p class="t-label tag tag-lit">{{ ph.eyebrow }}{% if ph.fact %}<span class="tag-fact">{{ ph.fact }}</span>{% endif %}</p>
+    {%- endif %}
+
+    <h1 class="t-display t-lg">{{ ph.heading | safe }}</h1>
+
+    {%- if ph.blurb %}
+    <p class="pagehead-blurb">{{ ph.blurb }}</p>
+    {%- endif %}
+
+  </div>
+</section>

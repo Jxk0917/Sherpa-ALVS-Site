@@ -1,0 +1,36 @@
+{# ═══ TRUST BADGES + SHIPPING NOTE ═══
+   Scoped to the Gummies family only (Jack, 2026-08-24) — included from
+   product.njk behind a `product.family == 'gummies'` check rather than
+   built as a sitewide block like guarantee-strip.njk. The four claims
+   mirror the icon badges already printed on the real pack back label
+   (redrawn in the sprite's own outline style, see icon-sprite.njk); the
+   shipping lines are new copy, not on the pack. #}
+<div class="pdp-trust">
+  <div class="trust-item">
+    <svg class="trust-icon" width="22" height="22" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-vegan"/></svg>
+    <span>Certified vegan</span>
+  </div>
+  <div class="trust-item">
+    <svg class="trust-icon" width="22" height="22" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-nocolor"/></svg>
+    <span>No added colors</span>
+  </div>
+  <div class="trust-item">
+    <svg class="trust-icon" width="22" height="22" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-natural"/></svg>
+    <span>All natural ingredients</span>
+  </div>
+  <div class="trust-item">
+    <svg class="trust-icon" width="22" height="22" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-sustain"/></svg>
+    <span>Sustainably sourced</span>
+  </div>
+</div>
+
+<div class="pdp-shipping">
+  <p class="ship-line">
+    <svg width="15" height="15" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-clock"/></svg>
+    Estimated shipping: 5&ndash;7 days from order date
+  </p>
+  <p class="ship-line">
+    <svg width="15" height="15" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-tag"/></svg>
+    Free shipping on orders above $70
+  </p>
+</div>

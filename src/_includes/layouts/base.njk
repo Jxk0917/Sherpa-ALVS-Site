@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ title }}</title>
+<title>{% if title %}{{ title }}{% else %}Sherpa{% endif %}</title>
 <meta name="description" content="{{ description }}">
 <meta name="theme-color" content="#6A1529">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/pages.css">
 </head>
 <body>
 
@@ -21,6 +23,10 @@
 {{ content | safe }}
 
 {% include "components/footer.njk" %}
+{% include "components/compliance-modal.njk" %}
+{%- if page.url == "/" %}
+{% include "components/corner-stack.njk" %}
+{%- endif %}
 
 <script src="/assets/main.js" defer></script>
 </body>
